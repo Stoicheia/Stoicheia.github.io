@@ -228,6 +228,7 @@ div img {
 	left: 0%;
 	height: 100%;
 	width: 20%;
+	border-radius: 5px;
 }
 
 .righty{
@@ -235,6 +236,7 @@ div img {
 	left: 80%;
 	height: 100%;
 	width: 20%;
+	border-radius: 5px;
 }
 
 .infoblock:hover{
@@ -255,6 +257,7 @@ div img {
 	border-style: solid;
 	border-width: 1px;
 	border-color: #fc02e3;
+	border-radius: 5px;
 }
 .contextL{
 	position: absolute;
