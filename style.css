@@ -1,0 +1,331 @@
+@font-face {
+    font-family: 'Vermin'; 
+    src: url('fonts/Vermin.ttf'); 
+}
+@font-face {
+    font-family: 'Yokel'; 
+    src: url('fonts/Yokel.ttf'); 
+}
+@font-face {
+    font-family: 'Protoculture'; 
+    src: url('fonts/Protoculture.ttf'); 
+}
+@font-face {
+    font-family: 'Fairy'; 
+    src: url('fonts/Fairy.ttf'); 
+}
+.container{
+	position: relative;
+}
+.text {
+	color: #ffffff;
+	font-family: "Comic Sans MS", "Comic Sans", cursive;
+	text-align: justify;
+	margin: 0 0 20px 0;
+	padding: 0;
+}
+.text a:link{
+	color:black;
+	text-decoration: none;
+	font-size: 18px;
+}
+.text a:visited{
+	color:black;
+	text-decoration: none;
+	font-size: 18px;	
+}
+.audio {
+	position: fixed;
+	left: 0;
+	top: 25;
+	display: flex;
+	justify-content: center;
+	align-items: center 
+}
+h1 {
+	color: #33eeff;
+	font-family: "Fairy";
+	font-size: 42px;
+	text-align: center;
+}
+.glower{
+	-webkit-animation: glow 2s ease-in-out infinite alternate;
+	-moz-animation: glow 2s ease-in-out infinite alternate;
+	animation: glow 2s ease-in-out infinite alternate;		
+}
+	@-webkit-keyframes glow {
+	  from {
+	    text-shadow: 0 0 2px #95389e, 0 0 5px #95389e, 0 0 7px #95389e, 0 0 10px #95389e, 0 0 12px #95389e, 0 0 15px #95389e, 0 0 17px #95389e;
+	  }
+	  to {
+	    text-shadow: 0 0 5px #215599, 0 0 7px #215599, 0 0 10px #215599, 0 0 12px #215599, 0 0 15px #215599, 0 0 17px #215599, 0 0 20px #215599;
+	  }
+	}
+	@-moz-keyframes glow {
+	  from {
+	    text-shadow: 0 0 2px #95389e, 0 0 5px #95389e, 0 0 7px #95389e, 0 0 10px #95389e, 0 0 12px #95389e, 0 0 15px #95389e, 0 0 17px #95389e;
+	  }
+	  to {
+	    text-shadow: 0 0 5px #215599, 0 0 7px #215599, 0 0 10px #215599, 0 0 12px #215599, 0 0 15px #215599, 0 0 17px #215599, 0 0 20px #215599;
+	  }
+	}
+	@keyframes glow {
+	  from {
+	    text-shadow: 0 0 2px #95389e, 0 0 5px #95389e, 0 0 7px #95389e, 0 0 10px #95389e, 0 0 12px #95389e, 0 0 15px #95389e, 0 0 17px #95389e;
+	  }
+	  to {
+	    text-shadow: 0 0 5px #215599, 0 0 7px #215599, 0 0 10px #215599, 0 0 12px #215599, 0 0 15px #215599, 0 0 17px #215599, 0 0 20px #215599;
+	  }
+	}		
+h2 {
+	color: #00ccff;
+	font-family: Fairy,serif;
+	font-size: 30px;
+}
+h3 {
+	color: #ccccff;
+	font-family: Fairy,serif;
+}
+h4 {
+	color: #0b0b0b;
+	font-family: Yokel,serif;
+	margin: 0;
+	padding: 0;
+}
+li {
+	color: #14144c;
+	font-family: Vermin,sans-serif;
+	text-align: justify;
+	margin: 20px 0px 0px 0px;
+}
+body {
+	background-color: #fceaa4;
+	background-image: url("images/inline.png");
+	background-repeat: repeat;
+	background-size: 250px 319px;
+}
+.animeleft{
+	position: absolute;
+	top: 45%;
+	left: 2%;
+	width: 26%;
+	height: auto;
+	z-index: -1;
+}
+.animeright{
+	position: absolute;
+	top: 55%;
+	right: 0%;
+	width: 42%;
+	height: auto;
+	z-index: -1;
+}
+table {
+	position: relative;
+	border: 2px solid black;
+	background-color: #f41186;
+	width: 1000;
+}
+div {
+	margin: 0px 50px;
+}
+div img {
+	margin: 0px 0px 20px 0px;
+}
+.list {
+	margin: 0px;
+}
+#nav div {
+	text-align: center;
+	line-height: 50px;
+}
+#nav ul {
+	width: 1000;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+#nav li {
+	display: inline;
+	width: 180px;
+	float: left;
+	margin: 10px 0px;
+}
+#nav a:link, a:visited {
+	display: block;
+	font-weight: bold;
+	font-size: 18px;
+	color: #000000;
+	background-color: #ff7cc0;
+	text-align: center;
+	text-decoration: none;
+	height: 50px;
+}
+#nav a:hover, a:active {
+	-webkit-animation: enlighten 0.25s forwards;
+	-moz-animation: enlighten 0.25s forwards;
+	animation: enlighten 0.25s forwards;		
+}
+	@-webkit-keyframes enlighten{100%{background-color: #ffbadd;}}
+	@-moz-keyframes enlighten{100%{background-color: #ffbadd;}}
+	@keyframes enlighten{100%{background-color: #ffbadd;}}		
+
+.rotate:hover{
+	-webkit-animation:spin 111s;
+	-moz-animation:spin 111s;
+	 animation:spin 111s;
+}
+	@-webkit-keyframes spin{100%{-webkit-transform: rotate(360deg);}}
+	@-moz-keyframes spin{100%{-moz-transform: rotate(360deg);}}
+	@keyframes spin{100%{transform: rotate(360deg);}}
+.round{
+	border-radius: 50%;
+}
+
+.dancer1{
+	-webkit-animation: danceI 2s ease-in-out infinite;
+	-moz-animation: danceI 2s ease-in-out infinite;
+	animation: danceI 2s ease-in-out infinite;
+}
+	@-webkit-keyframes danceI{50%{-webkit-transform: translateX(-30px);}
+							 100%{-webkit-transform: translateX(0px);}}
+	@-moz-keyframes danceI{50%{-moz-transform: translateX(-30px);}
+							 100%{-moz-transform: translateX(0px);}}
+	@keyframes danceI{50%{transform: translateX(-30px);}
+							 100%{transform: translateX(0px);}}							 
+.dancer2{
+	-webkit-animation: danceII 2s ease-in-out infinite;
+	-moz-animation: danceII 2s ease-in-out infinite;
+	animation: danceII 2s ease-in-out infinite;
+}
+	@-webkit-keyframes danceII{50%{-webkit-transform: translateX(30px);}
+							 100%{-webkit-transform: translateX(0px);}}
+	@-moz-keyframes danceII{50%{-moz-transform: translateX(30px);}
+							 100%{-moz-transform: translateX(0px);}}	
+	@keyframes danceII{50%{transform: translateX(30px);}
+							 100%{transform: translateX(0px);}}							 						 
+.breaker{
+	position: absolute;
+	width: 500px;
+	height: auto;
+	margin: 0;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+.breakwrap{
+	position: relative;
+	height: 100px;
+}
+
+.bottom{
+	top:-20%;
+}
+
+.lefty{
+	position: absolute;
+	left: 0%;
+	height: 100%;
+	width: 20%;
+}
+
+.righty{
+	position: absolute;
+	left: 80%;
+	height: 100%;
+	width: 20%;
+}
+
+.infoblock:hover{
+	-webkit-animation: glowmg 0.15s ease-in-out forwards;
+	-moz-animation: glowmg 0.15s ease-in-out forwards;
+	animation: glowmg 0.15s ease-in-out forwards;
+}
+
+@-webkit-keyframes glowmg{100%{-webkit-box-shadow: 0 0 20px 7px #fff;}}
+@-moz-keyframes glowmg{100%{-moz-box-shadow: 0 0 20px 7px #fff;}}
+@keyframes glowmg{100%{box-shadow: 0 0 20px 7px #fff;}}
+
+.infoblock{
+	position: relative;
+	height: 130px;
+	margin: 30px 0px;
+	background-color: rgba(249,104,179,0.8);
+	border-style: solid;
+	border-width: 1px;
+	border-color: #fc02e3;
+}
+.contextL{
+	position: absolute;
+	color: #ffffff;
+	font-family: "Yokel";
+	font-size: 28px;
+	margin: 0;
+	left: 23.5%;
+	right: 25%;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.contextR{
+	text-align: right;
+	position: absolute;
+	color: #ffffff;
+	font-family: "Yokel";
+	font-size: 28px;
+	margin: 0;
+	left: 25%;
+	right: 23.5%;
+	transform: translateX(-50%);
+	top: 50%;
+	transform: translateY(-50%);
+}
+.statbar{
+	position: relative;
+	border-radius: 5px;
+	background-color: #fff;
+	border: solid 2px rgb(255,145,246);
+	height: 30px;
+	width: 600px;
+	margin-left: 200px;
+}
+.statbox{
+	position: absolute;
+	line-height: 30px;
+	text-indent: 16px;
+	width: 100%;
+	border-radius: 5px;
+	background-image: linear-gradient(to right, #087f18, #17c62f);
+	text-align: left;
+	white-space: nowrap;
+	font-family: "Yokel";
+	font-size: 19px;
+	color: #fcabf1;
+	margin: 0 0 0 0;
+	-webkit-animation: load 300s forwards;
+	-moz-animation: load 300s forwards;
+	animation: load 300s forwards;
+}
+.statbar:hover{
+	-webkit-box-shadow: 0 0 2px 2px #fff;
+	-moz-box-shadow: 0 0 2px 2px #fff;
+	box-shadow: 0 0 2px 2px #fff;
+}
+.statext{
+	visibility: hidden;
+	position: absolute;
+	font-family: "Fairy";
+	font-size: 18px;
+	color: white;
+	line-height: 25px;
+	top: 120%;
+	width: 100%;
+	margin: 0;
+	text-align: center;
+}
+.statbar:hover .statext{
+	visibility: visible;
+}
+@-webkit-keyframes load{0%{width: 0;}1%{width: 45%;}5%{width: 82%;}6%{width: 83%;}9%{width: 92%;}100%{width: 98%;}}
+@-moz-keyframes load{0%{width: 0;}1%{width: 45%;}5%{width: 82%;}6%{width: 83%;}9%{width: 92%;}100%{width: 98%;}}
+@keyframes load{0%{width: 0;}1%{width: 45%;}5%{width: 82%;}6%{width: 83%;}9%{width: 92%;}100%{width: 98%;}}
