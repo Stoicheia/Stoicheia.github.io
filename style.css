@@ -120,6 +120,14 @@ body {
 	height: auto;
 	z-index: -1;
 }
+.animefixed{
+	position: fixed;
+	top: 1%;
+	right: 1%;
+	height: 34%;
+	width: auto;
+	z-index: 10;
+}
 table {
 	position: relative;
 	border: 2px solid black;
