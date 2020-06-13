@@ -87,8 +87,8 @@ h3 {
 	font-family: Fairy,serif;
 }
 h4 {
-	color: #0b0b0b;
-	font-family: Yokel,serif;
+	color: #ccccff;
+	font-family: Fairy,serif;
 	margin: 0;
 	padding: 0;
 }
@@ -124,7 +124,7 @@ body {
 	position: fixed;
 	top: 1%;
 	right: 1%;
-	height: 34%;
+	height: 28%;
 	width: auto;
 	z-index: 10;
 }
