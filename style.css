@@ -178,6 +178,19 @@ div img {
 	@-moz-keyframes enlighten{100%{background-color: #ffbadd;}}
 	@keyframes enlighten{100%{background-color: #ffbadd;}}		
 
+#themes{
+	text-align: left;
+	text-indent: 5px;
+	border: 2px solid #fc02e3;
+	border-radius: 3px;
+	background-color: rgba(249,104,179);
+	line-height: 120px;
+	height: 120px;
+	width: 200px;
+	font: 30px Fairy;
+	margin-top: 50px;
+}
+
 .rotate:hover{
 	-webkit-animation:spin 111s;
 	-moz-animation:spin 111s;
@@ -276,6 +289,8 @@ div img {
 	left: 23.5%;
 	right: 25%;
 	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
 	transform: translateY(-50%);
 }
 .contextR{
@@ -287,8 +302,12 @@ div img {
 	margin: 0;
 	left: 25%;
 	right: 23.5%;
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
 	transform: translateX(-50%);
 	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
 	transform: translateY(-50%);
 }
 .statbar{
