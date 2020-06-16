@@ -27,7 +27,8 @@
 	font-size: 15.5px;
 	text-align: justify;
 	margin: 0 0 20px 0;
-	padding: 0;
+	padding-left: 7px;
+	padding-right: 7px;
 }
 .text a:link{
 	color:black;
@@ -83,7 +84,7 @@ h1 {
 	  }
 	}		
 h2 {
-	color: #00ccff;
+	color: #88eeff;
 	font-family: Fairy,serif;
 	font-size: 30px;
 }
@@ -111,7 +112,7 @@ body {
 }
 .animeleft{
 	position: absolute;
-	top: 45%;
+	top: 500px;
 	left: 6%;
 	width: 26%;
 	height: auto;
@@ -119,7 +120,7 @@ body {
 }
 .animeright{
 	position: absolute;
-	top: 55%;
+	top: 600px;
 	right: 0%;
 	width: 42%;
 	height: auto;
@@ -365,6 +366,72 @@ div img {
 	-moz-transform: translateY(-50%);
 	transform: translateY(-50%);
 }
+
+
+.infowrapmini{
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: center;
+	height: 75px;
+	left: 50%;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 20px;
+	margin-bottom: 100px;
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
+.leftymini{
+	position: absolute;
+	left: 0%;
+	height: 100%;
+	width: 30%;
+	border-radius: 3px;
+}
+
+.infoblockmini:hover{
+	-webkit-animation: glowmg 0.15s ease-in-out forwards;
+	-moz-animation: glowmg 0.15s ease-in-out forwards;
+	animation: glowmg 0.15s ease-in-out forwards;
+}
+
+@-webkit-keyframes glowmg{100%{-webkit-box-shadow: 0 0 3px 2px #fff;}}
+@-moz-keyframes glowmg{100%{-moz-box-shadow: 0 0 3px 2px #fff;}}
+@keyframes glowmg{100%{box-shadow: 0 0 3px 2px #fff;}}
+
+.infoblockmini{
+	position: relative;
+	height: 100%;
+	width: 270px;
+	margin: 0px 10px;
+	background-color: rgba(249,104,179,0.8);
+	border-style: solid;
+	border-width: 1px;
+	border-color: #fcc;
+	border-radius: 5px;
+}
+.contextLmini{
+	position: absolute;
+	text-align: center;
+	color: #ffffff;
+	font-family: "Yokel";
+	font-size: 35px;
+	margin: 0;
+	line-height: 100%;
+	width: 70%;
+	left: 30%;
+	right: 25%;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+
 .statbar{
 	position: relative;
 	border-radius: 5px;
@@ -414,3 +481,56 @@ div img {
 @-webkit-keyframes load{0%{width: 0;}1%{width: 45%;}5%{width: 82%;}6%{width: 83%;}9%{width: 92%;}100%{width: 98%;}}
 @-moz-keyframes load{0%{width: 0;}1%{width: 45%;}5%{width: 82%;}6%{width: 83%;}9%{width: 92%;}100%{width: 98%;}}
 @keyframes load{0%{width: 0;}1%{width: 45%;}5%{width: 82%;}6%{width: 83%;}9%{width: 92%;}100%{width: 98%;}}
+
+.banner{
+	position: absolute;
+	line-height: 40px;
+	width: 998px;
+	left: -49px;
+	background-color: #e874e0;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #fff;
+	border-left: none;
+	border-right: none;
+	z-index: 0;
+
+	color: #ffffff;
+	font-family: "Yokel";
+	font-size: 28px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	text-align: center;
+	text-decoration: none;
+}
+
+.backbutton{
+	line-height: 35px;
+	width: 150px;
+	background-color: rgba(249,104,179,0.8);
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 3px;
+	border-color: #fdd;
+	margin-top:0;
+	margin-bottom: 40px;
+}
+
+.backtext{
+	color: #ffffff;
+	font-family: "Yokel";
+	font-size: 28px;
+	margin: auto;
+	margin-bottom: 0;
+	text-align: center;
+}
+
+.backbuttonlink{
+	text-decoration: none;
+}
+
+.backbutton:hover{
+	-webkit-animation: glowmg 0.15s ease-in-out forwards;
+	-moz-animation: glowmg 0.15s ease-in-out forwards;
+	animation: glowmg 0.15s ease-in-out forwards;
+}
