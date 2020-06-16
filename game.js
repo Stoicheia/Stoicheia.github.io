@@ -101,13 +101,14 @@ class Game{
 		this.player = new Player(this, this.playerSpeed);
 		this.input = new InputHandler(this.player);
 
+		this.gameObjects.push(this.player);
+
 		this.shooters = [];
 		this.shooters.push(new Shooter(this, new Vector(30,30), new Vector(0,0), this.songs.song1, 0));
 		this.shooters.push(new Shooter(this, new Vector(30,30), new Vector(this.width-30,0), this.songs.song1, 1));
 		this.shooters.push(new Shooter(this, new Vector(30,30), new Vector(0,this.height-30), this.songs.song1,2));
 		this.shooters.push(new Shooter(this, new Vector(30,30), new Vector(this.width-30,this.height-30), this.songs.song1,3));
 
-		this.gameObjects.push(this.player);
 		this.shooters.forEach((s)=>this.gameObjects.push(s));
 	}
 	update(dt){
@@ -133,7 +134,7 @@ class Player{
 		this.sprintFactor=1.6;
 	}
 	draw(c){
-		c.fillStyle = "#f5a"
+		c.fillStyle = "#fee"
 		c.fillRect(this.position.x, this.position.y, this.size.x, this.size.y);
 	}
 	update(dt){
@@ -181,6 +182,10 @@ class Bullet{
 		//ct.fillRect(this.collisionPos.x, this.collisionPos.y, this.collisionSize.x, this.collisionSize.y);
 		if(Vector.intersect(this.collisionPos,this.collisionSize,game.player.position,game.player.size)){
 			this.game.score-=this.vel.magnitude()/dt;
+			this.image = document.querySelector("#bullet_contact");
+		}
+		else{
+			this.image = document.querySelector("#bullet");
 		}
 	}
 	move(v, dt){
@@ -290,6 +295,9 @@ function loop(t){
 	lastTime = t;
 
 	ct.clearRect(0,0,WIDTH,HEIGHT);
+	ct.fillStyle = "#ff40b4"
+	ct.fillRect(0,0,WIDTH,HEIGHT);	
+
 	game.update(dt);
 	game.draw(ct);
 
