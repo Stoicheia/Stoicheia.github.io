@@ -213,7 +213,7 @@ class Shooter{
 		this.currentInfo = this.sequence[1].split(",");
 		this.toPos = parseInt(this.currentInfo[0]);
 		this.nextPos = parseInt(this.sequence[2].split(",")[0]);
-		this.interval = parseInt(this.currentInfo[1]);
+		this.interval = eval(this.currentInfo[1]);
 		this.trueInterval = this.interval*60/this.tempo;
 		this.bulletSpeed = parseInt(this.currentInfo[2]);
 		this.bulletVel;
@@ -242,7 +242,7 @@ class Shooter{
 			if(this.currentAction!=this.sequenceLength-1){
 				this.nextPos = parseInt(this.sequence[this.currentAction+1].split(",")[0]);			
 			}
-			this.interval = parseInt(this.currentInfo[1]);
+			this.interval = eval(this.currentInfo[1]);
 			this.trueInterval = this.interval*60/this.tempo;
 			this.bulletSpeed = parseInt(this.currentInfo[2]);
 			this.bulletVel;
