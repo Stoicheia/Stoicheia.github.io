@@ -1,3 +1,5 @@
+import Songs from "game_assets/songmap.js";
+
 let canvas = document.querySelector("#gameScreen");
 let ct = canvas.getContext("2d");
 
@@ -92,12 +94,21 @@ class Game{
 		this.height = h;
 	}
 	start(){
+		this.songs = new Songs();
+		
 		this.playerSpeed = 70;
 		this.player = new Player(this.playerSpeed);
 		this.bullet = new Bullet(new Vector(30,30), new Vector(0,0), new Vector(20,0));
 		this.input = new InputHandler(this.player);
 
+		this.shooters = [];
+		this.shooters.push(new Shooter(new Vector(30,30), new Vector(0,0), []));
+		this.shooters.push(new Shooter(new Vector(30,30), new Vector(this.width-30,0), []));
+		this.shooters.push(new Shooter(new Vector(30,30), new Vector(0,this.height-30), []));
+		this.shooters.push(new Shooter(new Vector(30,30), new Vector(this.width-30,this.height-30), []));
+
 		this.gameObjects = [this.bullet, this.player];
+		this.shooters.forEach((s)=>this.gameObjects.push(s));
 	}
 	update(dt){
 		this.gameObjects.forEach((o)=>o.update(dt));
@@ -172,6 +183,23 @@ class Bullet{
 		this.position = Vector.add(this.position, Vector.multiply(1/dt,v));
 		this.collisionPos = Vector.add(this.position,
 			new Vector(this.size.x*(1-this.leniency)/2, this.size.y*(1-this.leniency)/2));	
+	}
+}
+
+class Shooter{
+	constructor(sv, pv, bulletSequence){
+		this.image = document.querySelector("#shooter");
+		this.position = pv;
+		this.size = sv;
+		this.sequence = bulletSequence;
+	}
+
+	update(dt){
+
+	}
+
+	draw(c){
+		c.drawImage(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
 	}
 }
 
