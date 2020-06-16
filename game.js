@@ -95,6 +95,8 @@ class Game{
 		this.songs = new Songs();
 		this.gameObjects = [];
 
+		this.score = 0;
+
 		this.playerSpeed = 70;
 		this.player = new Player(this, this.playerSpeed);
 		this.input = new InputHandler(this.player);
@@ -110,6 +112,7 @@ class Game{
 	}
 	update(dt){
 		this.gameObjects.forEach((o)=>o.update(dt));
+		document.querySelector("#score").textContent=Math.round(this.score);
 	}
 	draw(ct){
 		this.gameObjects.forEach((o)=>o.draw(ct));
@@ -176,8 +179,9 @@ class Bullet{
 		this.move(this.vel, dt);
 		//ct.fillStyle = "#000";
 		//ct.fillRect(this.collisionPos.x, this.collisionPos.y, this.collisionSize.x, this.collisionSize.y);
-		if(Vector.intersect(this.collisionPos,this.collisionSize,game.player.position,game.player.size))
-			console.log("we did it reddit");
+		if(Vector.intersect(this.collisionPos,this.collisionSize,game.player.position,game.player.size)){
+			this.game.score-=this.vel.magnitude()/dt;
+		}
 	}
 	move(v, dt){
 		this.position = Vector.add(this.position, Vector.multiply(1/dt,v));
@@ -234,6 +238,7 @@ class Shooter{
 				this.nextPos = parseInt(this.sequence[this.currentAction+1].split(",")[0]);			
 			}
 			this.interval = parseInt(this.currentInfo[1]);
+			this.trueInterval = this.interval*60/this.tempo;
 			this.bulletSpeed = parseInt(this.currentInfo[2]);
 			this.bulletVel;
 			this.shootAction();

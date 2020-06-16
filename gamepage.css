@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Yokel'; 
+    src: url('fonts/Yokel.ttf'); 
+}
+
 #gameScreen{
 	position: absolute;
 	display: inline-block;
@@ -11,4 +16,20 @@
 
 img{
 	display: none;
+}
+
+#score{
+	position: absolute;
+	font-family: Yokel;
+	font-size: 50px;
+	line-height: 50px;
+	width: 200px;
+	text-align: right;
+	padding-right: 10px;
+	left: 65%;
+	top: 15%;
+	background-color: #fdd;
+	border-style: solid;
+	border-color: #000;
+	border-width: 3px;
 }
