@@ -97,7 +97,6 @@ class Game{
 
 		this.playerSpeed = 70;
 		this.player = new Player(this, this.playerSpeed);
-		this.bullet = new Bullet(this, new Vector(30,30), new Vector(0,0), new Vector(20,0));
 		this.input = new InputHandler(this.player);
 
 		this.shooters = [];
@@ -107,7 +106,6 @@ class Game{
 		this.shooters.push(new Shooter(this, new Vector(30,30), new Vector(this.width-30,this.height-30), this.songs.song1,3));
 
 		this.gameObjects.push(this.player);
-		this.gameObjects.push(this.bullet);
 		this.shooters.forEach((s)=>this.gameObjects.push(s));
 	}
 	update(dt){
@@ -127,7 +125,7 @@ class Player{
 		this.size = new Vector(30,30);
 		this.speed=s;
 		this.vel=new Vector(0,0);
-		this.position=new Vector(this.screenWidth/2-this.size.x/2, this.screenHeight-this.size.y-10);
+		this.position=new Vector(this.screenWidth/2-this.size.x/2, this.screenHeight/2-this.size.y/2);
 
 		this.sprintFactor=1.6;
 	}
@@ -193,6 +191,7 @@ class Shooter{
 		this.game = game;
 		this.image = document.querySelector("#shooter");
 		this.position = pv;
+		this.vel = new Vector(0,0);
 		this.size = sv;
 		this.sequence = bulletSequence;
 		this.sequenceLength = this.sequence.length;
@@ -200,36 +199,25 @@ class Shooter{
 		this.dir = d;
 
 		this.timer = 0;
+		this.tempo = parseInt(this.sequence[0]);
 		this.currentAction = 1;
 		this.currentInfo = this.sequence[1].split(",");
 		this.toPos = parseInt(this.currentInfo[0]);
+		this.nextPos = parseInt(this.sequence[2].split(",")[0]);
 		this.interval = parseInt(this.currentInfo[1]);
+		this.trueInterval = this.interval*60/this.tempo;
 		this.bulletSpeed = parseInt(this.currentInfo[2]);
 		this.bulletVel;
-		switch(this.dir){
-				case 0:
-					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(1,0));
-					this.position.y = (this.toPos/100)*(game.height-30);
-					break;
-				case 1:
-					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(0,1));
-					this.position.x = (this.toPos/100)*(game.width-30);
-					break;
-				case 2:
-					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(0,-1));
-					this.position.x = (this.toPos/100)*(game.width-30);
-					break;
-				default:
-					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(-1,0));
-					this.position.y = (this.toPos/100)*(game.height-30);
-		}
-		let b = new Bullet(this.game, new Vector(30,30),this.position,this.bulletVel);
-		console.log(b);
-		console.log(this.game.gameObjects);
-		this.game.gameObjects.push(b);
+		this.shootAction();
+	}
+
+	move(v,dt){
+		this.position = Vector.add(this.position, Vector.multiply(1/dt,v));	
 	}
 
 	update(dt){
+		this.move(this.vel, dt);
+
 		if(dt)
 			this.timer += 1/dt;
 
@@ -237,42 +225,52 @@ class Shooter{
 			this.active=false;
 		}
 
-		if(this.timer>=this.interval*60/parseInt(this.sequence[0])&&this.active){
-
+		if(this.timer>=this.trueInterval&&this.active){
 			this.currentAction += 1;
 			this.timer = 0;
 			this.currentInfo = this.sequence[this.currentAction].split(",");
 			this.toPos = parseInt(this.currentInfo[0]);
+			if(this.currentAction!=this.sequenceLength-1){
+				this.nextPos = parseInt(this.sequence[this.currentAction+1].split(",")[0]);			
+			}
 			this.interval = parseInt(this.currentInfo[1]);
 			this.bulletSpeed = parseInt(this.currentInfo[2]);
 			this.bulletVel;
-			switch(this.dir){
-				case 0:
-					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(1,0));
-					this.position.y = (this.toPos/100)*(this.game.height-30);
-					break;
-				case 1:
-					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(0,1));
-					this.position.x = (this.toPos/100)*(this.game.width-30);
-					break;
-				case 2:
-					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(0,-1));
-					this.position.x = (this.toPos/100)*(this.game.width-30);
-					break;
-				default:
-					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(-1,0));
-					this.position.y = (this.toPos/100)*(this.game.height-30);
-			}
-			let b = new Bullet(this.game, new Vector(30,30),this.position,this.bulletVel);
-			this.game.gameObjects.push(b);	
+			this.shootAction();
+			
 		}
 	}
 
-	
 
 	draw(c){
 		c.drawImage(this.image, this.position.x, this.position.y, this.size.x, this.size.y);
 	}
+
+	shootAction(){
+		switch(this.dir){
+				case 0:
+					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(1,0));
+					this.position.y = (this.toPos/100)*(this.game.height-30);
+					this.vel.y = ((this.nextPos-this.toPos)/100)*(this.game.height-30)/this.trueInterval;
+					break;
+				case 1:
+					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(0,1));
+					this.position.x = (this.toPos/100)*(this.game.width-30);
+					this.vel.x = ((this.nextPos-this.toPos)/100)*(this.game.width-30)/this.trueInterval;										
+					break;
+				case 2:
+					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(0,-1));
+					this.position.x = (this.toPos/100)*(this.game.width-30);
+					this.vel.x = ((this.nextPos-this.toPos)/100)*(this.game.width-30)/this.trueInterval;					
+					break;
+				default:
+					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(-1,0));
+					this.position.y = (this.toPos/100)*(this.game.height-30);
+					this.vel.y = ((this.nextPos-this.toPos)/100)*(this.game.height-30)/this.trueInterval;					
+			}
+		let b = new Bullet(this.game, new Vector(30,30),this.position,this.bulletVel);
+		this.game.gameObjects.push(b);	
+	}	
 }
 
 ct.clearRect(0,0,WIDTH,HEIGHT);
