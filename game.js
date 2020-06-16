@@ -22,8 +22,8 @@ class Vector{
 		if(v.magnitude()==0) return v;
 		return this.multiply(1/v.magnitude(), v);
 	}
-	static intersect(p1,s1,p2,s2){ // Key idea: look at the allowed range for p1-p2
-		let p = this.add(p1,this.multiply(-1,p2)); //p1-p2
+	static intersect(p1,s1,p2,s2){ // Key idea: look at the allowed range for p2-p1. thought of this in the shower
+		let p = this.add(p2,this.multiply(-1,p1)); //p2-p1
 		return (p.x>=-s2.x&&p.x<=s1.x)&&(p.y>=-s2.y&&p.y<=s1.y);
 	}
 }
@@ -94,10 +94,10 @@ class Game{
 	start(){
 		this.playerSpeed = 70;
 		this.player = new Player(this.playerSpeed);
-		this.bullet = new Bullet(new Vector(30,30), new Vector(30,30), new Vector(30,0));
+		this.bullet = new Bullet(new Vector(30,30), new Vector(0,0), new Vector(20,0));
 		this.input = new InputHandler(this.player);
 
-		this.gameObjects = [this.player, this.bullet];
+		this.gameObjects = [this.bullet, this.player];
 	}
 	update(dt){
 		this.gameObjects.forEach((o)=>o.update(dt));
@@ -150,6 +150,11 @@ class Bullet{
 		this.vel = vv;
 		this.position = pv;
 		this.size = sv;
+
+		this.leniency = 0.5;
+		this.collisionSize = Vector.multiply(this.leniency, this.size);
+		this.collisionPos = Vector.add(this.position,
+			new Vector(this.size.x*(1-this.leniency)/2, this.size.y*(1-this.leniency)/2));
 	}
 
 	draw(c){
@@ -158,11 +163,15 @@ class Bullet{
 
 	update(dt){
 		this.move(this.vel, dt);
-		if(Vector.intersect(this.position,this.size,game.player.position,game.player.size))
+		//ct.fillStyle = "#000";
+		//ct.fillRect(this.collisionPos.x, this.collisionPos.y, this.collisionSize.x, this.collisionSize.y);
+		if(Vector.intersect(this.collisionPos,this.collisionSize,game.player.position,game.player.size))
 			console.log("we did it reddit");
 	}
 	move(v, dt){
 		this.position = Vector.add(this.position, Vector.multiply(1/dt,v));
+		this.collisionPos = Vector.add(this.position,
+			new Vector(this.size.x*(1-this.leniency)/2, this.size.y*(1-this.leniency)/2));	
 	}
 }
 

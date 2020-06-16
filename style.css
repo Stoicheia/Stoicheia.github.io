@@ -14,6 +14,10 @@
     font-family: 'Fairy'; 
     src: url('fonts/Fairy.ttf'); 
 }
+@font-face {
+    font-family: 'Comic'; 
+    src: url('fonts/Point.ttf'); 
+}
 .container{
 	position: relative;
 }
