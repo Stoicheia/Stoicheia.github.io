@@ -16,7 +16,7 @@
 }
 @font-face {
     font-family: 'Comic'; 
-    src: url('fonts/Point.ttf'); 
+    src: url('fonts/Baloo.ttf'); 
 }
 .container{
 	position: relative;
@@ -24,6 +24,7 @@
 .text {
 	color: #ffffff;
 	font-family: Comic, "Comic Sans MS", "Comic Sans", cursive;
+	font-size: 15.5px;
 	text-align: justify;
 	margin: 0 0 20px 0;
 	padding: 0;
@@ -130,7 +131,7 @@ body {
 	right: 0%;
 	height: 24%;
 	width: auto;
-	z-index: 10;
+	z-index: -1;
 }
 table {
 	position: relative;
