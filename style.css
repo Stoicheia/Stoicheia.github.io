@@ -101,6 +101,9 @@ h4 {
 li {
 	color: #14144c;
 	font-family: Vermin,sans-serif;
+	-webkit-text-stroke: 0.25px;
+	-moz-text-stroke: 0.25px;
+	text-stroke: 0.25px;
 	text-align: justify;
 	margin: 20px 0px 0px 0px;
 }
@@ -403,11 +406,15 @@ div img {
 @-moz-keyframes glowmg{100%{-moz-box-shadow: 0 0 3px 2px #fff;}}
 @keyframes glowmg{100%{box-shadow: 0 0 3px 2px #fff;}}
 
+.infowrapmini a{
+	margin: 0px 5px;
+}
+
 .infoblockmini{
 	position: relative;
 	height: 100%;
 	width: 270px;
-	margin: 0px 10px;
+	margin: 0px 0px;
 	background-color: rgba(249,104,179,0.8);
 	border-style: solid;
 	border-width: 1px;
