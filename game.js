@@ -224,6 +224,9 @@ class Game{
 		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(this.width-35,this.height-70), map.sub2,3));
 	}
 	end(){
+		menu = new Menu(WIDTH, HEIGHT);
+		menu.start();
+		requestAnimationFrame(menuloop);
 		//break the animation loop -> go to end screen
 	}
 }
@@ -453,8 +456,8 @@ function loop(t){
 	if(dt){
 		game.update(dt);
 		game.draw(ct);
-		/*if(game.finished)
-			return;*/
+		if(game.finished)
+			return;
 	}
 
 	requestAnimationFrame(loop);
