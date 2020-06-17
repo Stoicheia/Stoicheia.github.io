@@ -4,6 +4,12 @@ let ct = canvas.getContext("2d");
 const WIDTH = 770;
 const HEIGHT = 770;
 
+class Maths{
+	static mod(a,b){
+		return ((a%b)+b)%b; //real modulo, not integer remainder
+	}
+}
+
 class Vector{
 	constructor(x,y){
 		this.x=x;
@@ -89,16 +95,108 @@ class InputHandler{
 	}
 }
 
-class Game{
+class Menu{
 	constructor(w,h){
 		this.width = w;
 		this.height = h;
 	}
 	start(){
 		this.songs = new Songs();
+		this.menuObjects = [];
+		this.selectables = [];
+
+		this.input = new MenuInput(this);
+
+		let song1Button = new SongButton(new Vector(350,350), new Vector(200,50)
+			,"Song One",this.startGame,this.songs.song1);
+		this.menuObjects.push(song1Button); this.selectables[0] = song1Button;
+
+		this.selectedButton = 0;
+
+		let song2Button = new SongButton(new Vector(350,420), new Vector(200,50)
+			,"Song Two",this.startGame,this.songs.song2);
+		this.menuObjects.push(song2Button); this.selectables[1] = song2Button;
+
+		this.finished = false;
+	}
+	update(dt){
+
+	}
+	draw(c){
+		this.menuObjects.forEach((o)=>o.draw(c));
+		c.fillStyle = "#3d3";
+		c.fillRect(this.selectables[this.selectedButton].position.x-20
+			,this.selectables[this.selectedButton].position.y
+			,15,this.selectables[this.selectedButton].size.y);
+	}
+	startGame(){
+		//console.log(this.finished);
+		menu.finished = true;
+
+		game = new Game(WIDTH, HEIGHT);
+		songs = new Songs();
+
+		game.start(menu.selectables[menu.selectedButton].song);
+		requestAnimationFrame(loop);
+	}
+}
+
+class Button{
+	constructor(pv,sv,text,click){
+		this.size = sv;
+		this.position = pv;
+		this.text = text;
+		this.clickAction = click;
+	}
+	update(dt){
+
+	}
+	draw(c){
+		c.fillStyle = "#359";
+		c.fillRect(this.position.x, this.position.y, this.size.x, this.size.y);
+		c.fillStyle = "#fff";
+		c.font = this.size.y/1.5+"px Yokel";
+		c.fillText(this.text, this.position.x+this.size.x/15, this.position.y+this.size.y/1.5);
+	}
+}
+
+class SongButton extends Button{
+	constructor(pv,sv,text,click,song){
+		super(pv,sv,text,click);
+		this.song = song;
+	}
+}
+
+class MenuInput{
+	constructor(menu){
+		document.addEventListener("keydown", e=>{
+			switch(event.keyCode){
+				case 32:
+					menu.selected.clickAction();
+					break;
+				case 87:
+					menu.selectedButton = 
+						Maths.mod((menu.selectedButton-1),menu.selectables.length);
+					break;
+				case 83:
+					menu.selectedButton = 
+						Maths.mod((menu.selectedButton+1),menu.selectables.length);
+			}
+		});
+	}
+}
+
+class Game{
+	constructor(w,h){
+		this.width = w;
+		this.height = h;
+	}
+	start(song){
 		this.gameObjects = [];
+		this.timer = 0;
 
 		this.score = 0;
+		this.finished = false;
 
 		this.playerSpeed = 70;
 		this.player = new Player(this, this.playerSpeed);
@@ -107,21 +205,27 @@ class Game{
 		this.gameObjects.push(this.player);
 
 		this.shooters = [];
-		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(-35,0), this.songs.song1, 0));
-		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(this.width-70,-35), this.songs.song1, 1));
-		//this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(0,this.height-30), this.songs.song1,2));
-		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(this.width-35,this.height-70), this.songs.song1,3));
-
+		this.loadShooters(song);
 		this.shooters.forEach((s)=>this.gameObjects.push(s));
 	}
 	update(dt){
+		if(dt)
+			this.timer += 1/dt;
 		this.gameObjects.forEach((o)=>o.update(dt));
 		document.querySelector("#score").textContent=Math.round(this.score);
 	}
 	draw(ct){
 		this.gameObjects.forEach((o)=>o.draw(ct));
 	}
-	
+	loadShooters(map){
+		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(-35,0), map.sub1, 0));
+		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(this.width-70,-35), map.main, 1));
+		//this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(0,this.height-30), this.songs.song1,2));
+		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(this.width-35,this.height-70), map.sub2,3));
+	}
+	end(){
+		//break the animation loop -> go to end screen
+	}
 }
 
 class Player{
@@ -230,7 +334,9 @@ class Shooter{
 		this.dir = d;
 
 		this.timer = 0;
-		this.tempo = parseInt(this.sequence[0]);
+		let songInfo = this.sequence[0].split(",");
+		this.tempo = parseInt(songInfo[0]);
+		this.time = parseInt(songInfo[1]);
 		this.currentAction = 1;
 		this.currentInfo = this.sequence[1].split(",");
 		this.toPos = parseInt(this.currentInfo[0]);
@@ -250,10 +356,14 @@ class Shooter{
 		this.move(this.vel, dt);
 
 		if(dt)
-			this.timer += 1/dt;
+			this.timer += 1/dt; //Change to follow audio dt later
 
 		if(this.currentAction>=this.sequenceLength-1){
 			this.active=false;
+			if(this.dir==1){
+				this.game.finished = true;
+				this.game.end();
+			}
 		}
 
 		if(this.timer>=this.trueInterval&&this.active){
@@ -310,11 +420,29 @@ class Shooter{
 ct.clearRect(0,0,WIDTH,HEIGHT);
 
 let lastTime = 0;
+let menu, game, songs;
 
-let game = new Game(WIDTH, HEIGHT);
-game.start();
+function menuloop(t){
+
+	let dt = t - lastTime;
+	lastTime = t;
+
+	ct.clearRect(0,0,WIDTH,HEIGHT);
+	ct.fillStyle = "#ff40b4"
+	ct.fillRect(0,0,WIDTH,HEIGHT);		
+
+	if(dt){
+		menu.update(dt);
+		menu.draw(ct);
+		if(menu.finished)
+			return;
+	}
+
+	requestAnimationFrame(menuloop);
+}
 
 function loop(t){
+
 	let dt = t - lastTime;
 	lastTime = t;
 
@@ -322,11 +450,23 @@ function loop(t){
 	ct.fillStyle = "#ff40b4"
 	ct.fillRect(0,0,WIDTH,HEIGHT);	
 
-	game.update(dt);
-	game.draw(ct);
+	if(dt){
+		game.update(dt);
+		game.draw(ct);
+		/*if(game.finished)
+			return;*/
+	}
 
 	requestAnimationFrame(loop);
 }
 
-requestAnimationFrame(loop);
+/*game = new Game(WIDTH, HEIGHT);
+songs = new Songs();
+
+game.start(songs.song1);
+requestAnimationFrame(loop);*/
+
+menu = new Menu(WIDTH, HEIGHT);
+menu.start();
+requestAnimationFrame(menuloop);
 
