@@ -1,8 +1,8 @@
 let canvas = document.querySelector("#gameScreen");
 let ct = canvas.getContext("2d");
 
-const WIDTH = 800;
-const HEIGHT = 600;
+const WIDTH = 770;
+const HEIGHT = 770;
 
 class Vector{
 	constructor(x,y){
@@ -25,6 +25,9 @@ class Vector{
 	static intersect(p1,s1,p2,s2){ // Key idea: look at the allowed range for p2-p1. thought of this in the shower
 		let p = this.add(p2,this.multiply(-1,p1)); //p2-p1
 		return (p.x>=-s2.x&&p.x<=s1.x)&&(p.y>=-s2.y&&p.y<=s1.y);
+	}
+	static copy(v){
+		return new Vector(v.x,v.y);
 	}
 }
 
@@ -104,10 +107,10 @@ class Game{
 		this.gameObjects.push(this.player);
 
 		this.shooters = [];
-		this.shooters.push(new Shooter(this, new Vector(30,30), new Vector(0,0), this.songs.song1, 0));
-		this.shooters.push(new Shooter(this, new Vector(30,30), new Vector(this.width-30,0), this.songs.song1, 1));
-		this.shooters.push(new Shooter(this, new Vector(30,30), new Vector(0,this.height-30), this.songs.song1,2));
-		this.shooters.push(new Shooter(this, new Vector(30,30), new Vector(this.width-30,this.height-30), this.songs.song1,3));
+		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(-35,0), this.songs.song1, 0));
+		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(this.width-70,-35), this.songs.song1, 1));
+		//this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(0,this.height-30), this.songs.song1,2));
+		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(this.width-35,this.height-70), this.songs.song1,3));
 
 		this.shooters.forEach((s)=>this.gameObjects.push(s));
 	}
@@ -132,6 +135,10 @@ class Player{
 		this.position=new Vector(this.screenWidth/2-this.size.x/2, this.screenHeight/2-this.size.y/2);
 
 		this.sprintFactor=1.6;
+		this.status="normal";
+		this.scoreMod=1;
+		this.scorePenalty=1.4;
+		this.scoreShield=1.4;
 	}
 	draw(c){
 		c.fillStyle = "#fee"
@@ -139,8 +146,23 @@ class Player{
 	}
 	update(dt){
 		this.vel = Vector.multiply(this.speed,Vector.normalised(game.input.inputVector));
-		if(game.input.shiftHeld) this.sprint(this.sprintFactor);
-		if(game.input.spaceHeld) this.focus(this.sprintFactor);
+		if(game.input.shiftHeld) this.sprint();
+		if(game.input.spaceHeld) this.focus();
+		else if(!game.input.shiftHeld) this.status = "normal";
+
+		switch(this.status){
+			case "sprinting":
+				this.vel = Vector.multiply(this.sprintFactor,this.vel);
+				this.scoreMod = this.scorePenalty;
+				break;
+			case "crawling":	
+				this.vel = Vector.multiply(1/this.sprintFactor,this.vel);
+				this.scoreMod = 1/this.scoreShield;
+				break;
+			case "normal":
+				this.scoreMod = 1;						
+		}
+			
 		this.move(this.vel,dt);
 	}	
 	move(v,dt){
@@ -150,11 +172,11 @@ class Player{
 		if(this.position.y<0) this.position.y=0;
 		else if(this.position.y>this.screenHeight-this.size.y) this.position.y=this.screenHeight-this.size.y;
 	}
-	sprint(f){
-		this.vel = Vector.multiply(f,this.vel);
+	sprint(){
+		this.status = "sprinting";
 	}
-	focus(f){
-		this.vel = Vector.multiply(1/f,this.vel);
+	focus(){
+		this.status = "crawling";
 	}
 }
 
@@ -181,7 +203,7 @@ class Bullet{
 		//ct.fillStyle = "#000";
 		//ct.fillRect(this.collisionPos.x, this.collisionPos.y, this.collisionSize.x, this.collisionSize.y);
 		if(Vector.intersect(this.collisionPos,this.collisionSize,game.player.position,game.player.size)){
-			this.game.score-=this.vel.magnitude()/dt;
+			this.game.score-=this.game.player.scoreMod*this.vel.magnitude()/dt;
 			this.image = document.querySelector("#bullet_contact");
 		}
 		else{
@@ -257,28 +279,30 @@ class Shooter{
 	}
 
 	shootAction(){
+		let bulletPos = new Vector(0,0);
 		switch(this.dir){
 				case 0:
 					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(1,0));
-					this.position.y = (this.toPos/100)*(this.game.height-30);
-					this.vel.y = ((this.nextPos-this.toPos)/100)*(this.game.height-30)/this.trueInterval;
+					this.position.y = (this.toPos/100)*(this.game.height-70);
+					this.vel.y = ((this.nextPos-this.toPos)/100)*(this.game.height-70)/this.trueInterval;
 					break;
 				case 1:
 					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(0,1));
-					this.position.x = (this.toPos/100)*(this.game.width-30);
-					this.vel.x = ((this.nextPos-this.toPos)/100)*(this.game.width-30)/this.trueInterval;										
+					this.position.x = (this.toPos/100)*(this.game.width-70);				
+					this.vel.x = ((this.nextPos-this.toPos)/100)*(this.game.width-70)/this.trueInterval;										
 					break;
 				case 2:
 					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(0,-1));
-					this.position.x = (this.toPos/100)*(this.game.width-30);
-					this.vel.x = ((this.nextPos-this.toPos)/100)*(this.game.width-30)/this.trueInterval;					
+					this.position.x = (this.toPos/100)*(this.game.width-70);			
+					this.vel.x = ((this.nextPos-this.toPos)/100)*(this.game.width-70)/this.trueInterval;					
 					break;
 				default:
 					this.bulletVel = Vector.multiply(this.bulletSpeed,new Vector(-1,0));
-					this.position.y = (this.toPos/100)*(this.game.height-30);
-					this.vel.y = ((this.nextPos-this.toPos)/100)*(this.game.height-30)/this.trueInterval;					
+					this.position.y = (this.toPos/100)*(this.game.height-70);
+					this.vel.y = ((this.nextPos-this.toPos)/100)*(this.game.height-70)/this.trueInterval;					
 			}
-		let b = new Bullet(this.game, new Vector(30,30),this.position,this.bulletVel);
+		bulletPos = Vector.copy(this.position); 
+		let b = new Bullet(this.game, new Vector(70,70),bulletPos,this.bulletVel);
 		this.game.gameObjects.push(b);	
 	}	
 }
