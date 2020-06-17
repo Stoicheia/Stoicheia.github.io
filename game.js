@@ -172,7 +172,7 @@ class MenuInput{
 		document.addEventListener("keydown", e=>{
 			switch(event.keyCode){
 				case 32:
-					menu.selected.clickAction();
+					menu.selectables[menu.selectedButton].clickAction();
 					break;
 				case 87:
 					menu.selectedButton = 
