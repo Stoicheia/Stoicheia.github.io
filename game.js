@@ -361,27 +361,31 @@ class Shooter{
 		if(dt)
 			this.timer += 1/dt; //Change to follow audio dt later
 
-		if(this.currentAction>=this.sequenceLength-1){
-			this.active=false;
-			if(this.dir==1){
-				this.game.finished = true;
-				this.game.end();
-			}
-		}
 
 		if(this.timer>=this.trueInterval&&this.active){
-			this.currentAction += 1;
-			this.timer = 0;
-			this.currentInfo = this.sequence[this.currentAction].split(",");
-			this.toPos = parseInt(this.currentInfo[0]);
-			if(this.currentAction!=this.sequenceLength-1){
-				this.nextPos = parseInt(this.sequence[this.currentAction+1].split(",")[0]);			
+
+			if(this.currentAction==this.sequenceLength-1){
+				this.active=false;
+				if(this.dir==1){
+					this.game.finished = true;
+					this.game.end();
+				}				
 			}
-			this.interval = eval(this.currentInfo[1]);
-			this.trueInterval = this.interval*60/this.tempo;
-			this.bulletSpeed = parseInt(this.currentInfo[2]);
-			this.bulletVel;
-			this.shootAction();
+
+			else{
+				this.currentAction += 1;
+				this.timer = 0;
+				this.currentInfo = this.sequence[this.currentAction].split(",");
+				this.toPos = parseInt(this.currentInfo[0]);
+				if(this.currentAction!=this.sequenceLength-1){
+					this.nextPos = parseInt(this.sequence[this.currentAction+1].split(",")[0]);			
+				}
+				this.interval = eval(this.currentInfo[1]);
+				this.trueInterval = this.interval*60/this.tempo;
+				this.bulletSpeed = parseInt(this.currentInfo[2]);
+				this.bulletVel;
+				this.shootAction();
+			}
 			
 		}
 	}
