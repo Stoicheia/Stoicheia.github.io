@@ -46,13 +46,11 @@ class Vector{
 
 class InputStats{
 	constructor(){
-		this.shiftHeld = false;
-		this.spaceHeld = false;
+		this.characterHeld = Array(222).fill(false);
 		this.inputVector = new Vector(0,0); // Directional input based on movement keys
 	}
 	reset(){
-		this.shiftHeld = false;
-		this.spaceHeld = false;
+		this.characterHeld = Array(222).fill(false);
 		this.inputVector = new Vector(0,0); // Directional input based on movement keys
 	}
 }	
@@ -60,7 +58,7 @@ class InputStats{
 class MenuInput{
 	constructor(menu){
 		this.keyDown = function(e){
-			switch(event.keyCode){
+			switch(e.keyCode){
 				case 32:
 					menu.selectables[menu.selectedButton].clickAction();
 					break;
@@ -79,8 +77,12 @@ class MenuInput{
 class InputHandler{
 	constructor(p){
 		this.keyDown = function(e){
-			switch(event.keyCode){
-				case 65:
+				inputstats.characterHeld[e.keyCode] = true;
+				inputstats.inputVector.x 
+					= parseInt(inputstats.characterHeld[68]-inputstats.characterHeld[65]);
+				inputstats.inputVector.y 
+					= parseInt(inputstats.characterHeld[83]-inputstats.characterHeld[87]);					
+				/*case 65:
 					inputstats.inputVector.x-=1;
 					if(inputstats.inputVector.x<-1) inputstats.inputVector.x=-1;
 					break;
@@ -97,15 +99,18 @@ class InputHandler{
 					if(inputstats.inputVector.y>1) inputstats.inputVector.y=1;
 					break;
 				case 16:
-					inputstats.shiftHeld = true;
+					inputstats.characterHeld[16] = true;
 					break;
 				case 32:
-					inputstats.spaceHeld = true;
-			}
+					inputstats.characterHeld[32] = true;*/
 		}
 		this.keyUp = function(e){
-			switch(event.keyCode){
-				case 68:
+				inputstats.characterHeld[e.keyCode] = false;
+				inputstats.inputVector.x 
+					= parseInt(inputstats.characterHeld[68]-inputstats.characterHeld[65]);
+				inputstats.inputVector.y 
+					= parseInt(inputstats.characterHeld[83]-inputstats.characterHeld[87]);					
+				/*case 68:
 					inputstats.inputVector.x-=1;
 					if(inputstats.inputVector.x>1) inputstats.inputVector.x=1;
 					break;
@@ -122,11 +127,10 @@ class InputHandler{
 					if(inputstats.inputVector.y>1) inputstats.inputVector.y=1;
 					break;
 				case 16:
-					inputstats.shiftHeld = false;
+					inputstats.characterHeld[16] = false;
 					break;
 				case 32:
-					inputstats.spaceHeld = false;
-			}
+					inputstats.characterHeld[32] = false;*/
 		}
 	}
 }
@@ -213,7 +217,7 @@ class Game{
 
 		this.score = 0;
 
-		this.playerSpeed = 70;
+		this.playerSpeed = 100;
 		this.player = new Player(this, this.playerSpeed);
 		this.input = new InputHandler(this.player);
 		document.addEventListener("keydown", this.input.keyDown);
@@ -272,7 +276,7 @@ class Player{
 		this.vel=new Vector(0,0);
 		this.position=new Vector(this.screenWidth/2-this.size.x/2, this.screenHeight/2-this.size.y/2);
 
-		this.sprintFactor=1.6;
+		this.sprintFactor=1.7;
 		this.status="normal";
 		this.scoreMod=1;
 		this.scorePenalty=1.4;
@@ -284,9 +288,9 @@ class Player{
 	}
 	update(dt){
 		this.vel = Vector.multiply(this.speed,Vector.normalised(inputstats.inputVector));
-		if(inputstats.shiftHeld) this.sprint();
-		if(inputstats.spaceHeld) this.focus();
-		else if(!inputstats.shiftHeld) this.status = "normal";
+		if(inputstats.characterHeld[16]) this.sprint();
+		if(inputstats.characterHeld[32]) this.focus();
+		else if(!inputstats.characterHeld[16]) this.status = "normal";
 
 		switch(this.status){
 			case "sprinting":
