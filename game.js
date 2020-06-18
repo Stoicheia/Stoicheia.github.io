@@ -204,8 +204,12 @@ class Game{
 		this.height = h;
 	}
 	start(song){
+		this.song = song;
 		this.gameObjects = [];
+
 		this.timer = 0;
+		this.lastAudioTime = 0;
+		this.audioDt = 0.001; //avoid division by zero
 
 		this.score = 0;
 
@@ -220,10 +224,20 @@ class Game{
 		this.shooters = [];
 		this.loadShooters(song);
 		this.shooters.forEach((s)=>this.gameObjects.push(s));
+
+		song.audio.volume = song.audioVolume;
+		song.audio.play();
 	}
 	update(dt){
 		if(dt)
 			this.timer += 1/dt;
+		this.audioDt = this.song.audio.currentTime - this.lastAudioTime;
+		this.lastAudioTime = this.song.audio.currentTime;
+
+		if(!document.hasFocus()){
+			this.end();
+		}
+
 		this.gameObjects.forEach((o)=>o.update(dt));
 		document.querySelector("#score").textContent=Math.round(this.score);
 	}
@@ -231,16 +245,18 @@ class Game{
 		this.gameObjects.forEach((o)=>o.draw(ct));
 	}
 	loadShooters(map){
-		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(-35,0), map.sub1, 0));
+		//this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(-35,0), map.sub1, 0));
 		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(this.width-70,-35), map.main, 1));
 		//this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(0,this.height-30), this.songs.song1,2));
-		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(this.width-35,this.height-70), map.sub2,3));
+		//this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(this.width-35,this.height-70), map.sub2,3));
 	}
 	end(){
+		document.querySelector("#lastScore").textContent=Math.round(this.score);		
 		document.removeEventListener("keydown", this.input.keyDown);
 		document.removeEventListener("keyup", this.input.keyUp);
 		inputstats.reset();
 		frame.state = GAMESTATE.MENU;
+		this.song.audio.pause();
 		menu.start();
 		//break the animation loop -> go to end screen
 	}
@@ -353,28 +369,29 @@ class Shooter{
 
 		this.timer = 0;
 		let songInfo = this.sequence[0].split(",");
-		this.tempo = parseInt(songInfo[0]);
-		this.time = parseInt(songInfo[1]);
+		this.tempo = parseFloat(songInfo[0]);
+		this.timeSignature = parseInt(songInfo[1]);
 		this.currentAction = 1;
 		this.currentInfo = this.sequence[1].split(",");
-		this.toPos = parseInt(this.currentInfo[0]);
-		this.nextPos = parseInt(this.sequence[2].split(",")[0]);
+		this.toPos = parseFloat(this.currentInfo[0]);
+		this.nextPos = parseFloat(this.sequence[2].split(",")[0]);
 		this.interval = eval(this.currentInfo[1]);
 		this.trueInterval = this.interval*60/this.tempo;
-		this.bulletSpeed = parseInt(this.currentInfo[2]);
+		this.bulletState = 0;
+		this.bulletSpeed = parseFloat(this.currentInfo[2]);
 		this.bulletVel;
 		this.shootAction();
 	}
 
-	move(v,dt){
-		this.position = Vector.add(this.position, Vector.multiply(1/dt,v));	
+	move(v){
+		this.position = Vector.add(this.position, Vector.multiply(this.game.audioDt,v));	
 	}
 
 	update(dt){
-		this.move(this.vel, dt);
+		this.move(this.vel);
 
-		if(dt)
-			this.timer += 1/dt; //Change to follow audio dt later
+		if(this.game.audioDt!=0)
+			this.timer += this.game.audioDt; //Change to follow audio dt later
 
 
 		if(this.timer>=this.trueInterval&&this.active){
@@ -390,14 +407,17 @@ class Shooter{
 				this.currentAction += 1;
 				this.timer = 0;
 				this.currentInfo = this.sequence[this.currentAction].split(",");
-				this.toPos = parseInt(this.currentInfo[0]);
+				this.toPos = parseFloat(this.currentInfo[0]);
 				if(this.currentAction!=this.sequenceLength-1){
-					this.nextPos = parseInt(this.sequence[this.currentAction+1].split(",")[0]);			
+					this.nextPos = parseFloat(this.sequence[this.currentAction+1].split(",")[0]);			
 				}
 				this.interval = eval(this.currentInfo[1]);
+				this.bulletSpeed = parseFloat(this.currentInfo[2]);
+				if(this.currentInfo.length>3)
+					this.bulletState = parseFloat(this.currentInfo[3]);
+				if(this.currentInfo.length>4)
+					this.tempo = parseFloat(this.currentInfo[4]);
 				this.trueInterval = this.interval*60/this.tempo;
-				this.bulletSpeed = parseInt(this.currentInfo[2]);
-				this.bulletVel;
 				this.shootAction();
 			}
 			
@@ -410,6 +430,8 @@ class Shooter{
 	}
 
 	shootAction(){
+		let hitSound = new Audio("game_assets/hit.mp3");
+		hitSound.play();
 		let bulletPos = new Vector(0,0);
 		switch(this.dir){
 				case 0:
@@ -432,9 +454,12 @@ class Shooter{
 					this.position.y = (this.toPos/100)*(this.game.height-70);
 					this.vel.y = ((this.nextPos-this.toPos)/100)*(this.game.height-70)/this.trueInterval;					
 			}
-		bulletPos = Vector.copy(this.position); 
-		let b = new Bullet(this.game, new Vector(70,70),bulletPos,this.bulletVel);
-		this.game.gameObjects.push(b);	
+		bulletPos = Vector.copy(this.position);
+		let b;
+		if(this.bulletState!=0){
+			b = new Bullet(this.game, new Vector(70,70),bulletPos,this.bulletVel);
+			this.game.gameObjects.push(b);
+		}	
 	}	
 }
 
