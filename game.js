@@ -405,7 +405,6 @@ class Shooter{
 
 			else{
 				this.currentAction += 1;
-				this.timer = 0;
 				this.currentInfo = this.sequence[this.currentAction].split(",");
 				this.toPos = parseFloat(this.currentInfo[0]);
 				if(this.currentAction!=this.sequenceLength-1){
@@ -417,7 +416,8 @@ class Shooter{
 					this.bulletState = parseFloat(this.currentInfo[3]);
 				if(this.currentInfo.length>4)
 					this.tempo = parseFloat(this.currentInfo[4]);
-				this.trueInterval = this.interval*60/this.tempo;
+				this.trueInterval = this.interval*60/this.tempo-(this.timer-this.trueInterval);
+				this.timer = 0;
 				this.shootAction();
 			}
 			
