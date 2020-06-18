@@ -4,6 +4,13 @@ let ct = canvas.getContext("2d");
 const WIDTH = 770;
 const HEIGHT = 770;
 
+const GAMESTATE = {
+			PAUSED: 0,
+			RUNNING: 1,
+			MENU: 2,
+			GAMEOVER: 3
+		};
+
 class Maths{
 	static mod(a,b){
 		return ((a%b)+b)%b; //real modulo, not integer remainder
@@ -37,61 +44,90 @@ class Vector{
 	}
 }
 
-class InputHandler{
-	constructor(p){
+class InputStats{
+	constructor(){
 		this.shiftHeld = false;
 		this.spaceHeld = false;
 		this.inputVector = new Vector(0,0); // Directional input based on movement keys
-		document.addEventListener("keydown", e=>{
+	}
+	reset(){
+		this.shiftHeld = false;
+		this.spaceHeld = false;
+		this.inputVector = new Vector(0,0); // Directional input based on movement keys
+	}
+}	
+
+class MenuInput{
+	constructor(menu){
+		this.keyDown = function(e){
 			switch(event.keyCode){
-				case 65:
-					this.inputVector.x-=1;
-					if(this.inputVector.x<-1) this.inputVector.x=-1;
-					break;
-				case 68:
-					this.inputVector.x+=1;
-					if(this.inputVector.x>1) this.inputVector.x=1;
+				case 32:
+					menu.selectables[menu.selectedButton].clickAction();
 					break;
 				case 87:
-					this.inputVector.y-=1;
-					if(this.inputVector.y<-1) this.inputVector.y=-1;
+					menu.selectedButton = 
+						Maths.mod((menu.selectedButton-1),menu.selectables.length);
 					break;
 				case 83:
-					this.inputVector.y+=1;
-					if(this.inputVector.y>1) this.inputVector.y=1;
-					break;
-				case 16:
-					this.shiftHeld = true;
-					break;
-				case 32:
-					this.spaceHeld = true;
+					menu.selectedButton = 
+						Maths.mod((menu.selectedButton+1),menu.selectables.length);
 			}
-		});
-		document.addEventListener("keyup", e=>{
+		};
+	}
+}
+
+class InputHandler{
+	constructor(p){
+		this.keyDown = function(e){
 			switch(event.keyCode){
-				case 68:
-					this.inputVector.x-=1;
-					if(this.inputVector.x>1) this.inputVector.x=1;
-					break;
 				case 65:
-					this.inputVector.x+=1;
-					if(this.inputVector.x<-1) this.inputVector.x=-1;
+					inputstats.inputVector.x-=1;
+					if(inputstats.inputVector.x<-1) inputstats.inputVector.x=-1;
 					break;
-				case 83:
-					this.inputVector.y-=1;
-					if(this.inputVector.y<-1) this.inputVector.y=-1;
+				case 68:
+					inputstats.inputVector.x+=1;
+					if(inputstats.inputVector.x>1) inputstats.inputVector.x=1;
 					break;
 				case 87:
-					this.inputVector.y+=1;
-					if(this.inputVector.y>1) this.inputVector.y=1;
+					inputstats.inputVector.y-=1;
+					if(inputstats.inputVector.y<-1) inputstats.inputVector.y=-1;
+					break;
+				case 83:
+					inputstats.inputVector.y+=1;
+					if(inputstats.inputVector.y>1) inputstats.inputVector.y=1;
 					break;
 				case 16:
-					this.shiftHeld = false;
+					inputstats.shiftHeld = true;
 					break;
 				case 32:
-					this.spaceHeld = false;
+					inputstats.spaceHeld = true;
 			}
-		});
+		}
+		this.keyUp = function(e){
+			switch(event.keyCode){
+				case 68:
+					inputstats.inputVector.x-=1;
+					if(inputstats.inputVector.x>1) inputstats.inputVector.x=1;
+					break;
+				case 65:
+					inputstats.inputVector.x+=1;
+					if(inputstats.inputVector.x<-1) inputstats.inputVector.x=-1;
+					break;
+				case 83:
+					inputstats.inputVector.y-=1;
+					if(inputstats.inputVector.y<-1) inputstats.inputVector.y=-1;
+					break;
+				case 87:
+					inputstats.inputVector.y+=1;
+					if(inputstats.inputVector.y>1) inputstats.inputVector.y=1;
+					break;
+				case 16:
+					inputstats.shiftHeld = false;
+					break;
+				case 32:
+					inputstats.spaceHeld = false;
+			}
+		}
 	}
 }
 
@@ -106,6 +142,7 @@ class Menu{
 		this.selectables = [];
 
 		this.input = new MenuInput(this);
+		document.addEventListener("keydown", this.input.keyDown);
 
 		let song1Button = new SongButton(new Vector(350,350), new Vector(200,50)
 			,"Song One",this.startGame,this.songs.song1);
@@ -116,8 +153,6 @@ class Menu{
 		let song2Button = new SongButton(new Vector(350,420), new Vector(200,50)
 			,"Song Two",this.startGame,this.songs.song2);
 		this.menuObjects.push(song2Button); this.selectables[1] = song2Button;
-
-		this.finished = false;
 	}
 	update(dt){
 
@@ -130,14 +165,10 @@ class Menu{
 			,15,this.selectables[this.selectedButton].size.y);
 	}
 	startGame(){
-		//console.log(this.finished);
-		menu.finished = true;
-
-		game = new Game(WIDTH, HEIGHT);
-		songs = new Songs();
-
+		document.removeEventListener("keydown", menu.input.keyDown);
+		inputstats.reset();
+		frame.state = GAMESTATE.RUNNING;
 		game.start(menu.selectables[menu.selectedButton].song);
-		requestAnimationFrame(loop);
 	}
 }
 
@@ -167,25 +198,6 @@ class SongButton extends Button{
 	}
 }
 
-class MenuInput{
-	constructor(menu){
-		document.addEventListener("keydown", e=>{
-			switch(event.keyCode){
-				case 32:
-					menu.selectables[menu.selectedButton].clickAction();
-					break;
-				case 87:
-					menu.selectedButton = 
-						Maths.mod((menu.selectedButton-1),menu.selectables.length);
-					break;
-				case 83:
-					menu.selectedButton = 
-						Maths.mod((menu.selectedButton+1),menu.selectables.length);
-			}
-		});
-	}
-}
-
 class Game{
 	constructor(w,h){
 		this.width = w;
@@ -196,11 +208,12 @@ class Game{
 		this.timer = 0;
 
 		this.score = 0;
-		this.finished = false;
 
 		this.playerSpeed = 70;
 		this.player = new Player(this, this.playerSpeed);
 		this.input = new InputHandler(this.player);
+		document.addEventListener("keydown", this.input.keyDown);
+		document.addEventListener("keyup", this.input.keyUp);				
 
 		this.gameObjects.push(this.player);
 
@@ -224,9 +237,11 @@ class Game{
 		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(this.width-35,this.height-70), map.sub2,3));
 	}
 	end(){
-		menu = new Menu(WIDTH, HEIGHT);
+		document.removeEventListener("keydown", this.input.keyDown);
+		document.removeEventListener("keyup", this.input.keyUp);
+		inputstats.reset();
+		frame.state = GAMESTATE.MENU;
 		menu.start();
-		requestAnimationFrame(menuloop);
 		//break the animation loop -> go to end screen
 	}
 }
@@ -252,10 +267,10 @@ class Player{
 		c.fillRect(this.position.x, this.position.y, this.size.x, this.size.y);
 	}
 	update(dt){
-		this.vel = Vector.multiply(this.speed,Vector.normalised(game.input.inputVector));
-		if(game.input.shiftHeld) this.sprint();
-		if(game.input.spaceHeld) this.focus();
-		else if(!game.input.shiftHeld) this.status = "normal";
+		this.vel = Vector.multiply(this.speed,Vector.normalised(inputstats.inputVector));
+		if(inputstats.shiftHeld) this.sprint();
+		if(inputstats.spaceHeld) this.focus();
+		else if(!inputstats.shiftHeld) this.status = "normal";
 
 		switch(this.status){
 			case "sprinting":
@@ -367,7 +382,6 @@ class Shooter{
 			if(this.currentAction==this.sequenceLength-1){
 				this.active=false;
 				if(this.dir==1){
-					this.game.finished = true;
 					this.game.end();
 				}				
 			}
@@ -424,31 +438,45 @@ class Shooter{
 	}	
 }
 
+class Frame{
+	constructor(){
+		this.state;
+	}
+	update(dt){
+		switch (this.state){
+			case GAMESTATE.MENU:
+				menu.update(dt);
+				break;
+			case GAMESTATE.RUNNING:
+				game.update(dt);
+				break;
+			default:
+				game.update(dt);
+		}
+	}
+
+	draw(ct){
+		switch (this.state){
+			case GAMESTATE.MENU:
+				menu.draw(ct);
+				break;
+			case GAMESTATE.RUNNING:
+				game.draw(ct);
+				break;
+			default:
+				game.draw(ct);
+		}
+	}
+}
+
 ct.clearRect(0,0,WIDTH,HEIGHT);
 
 let lastTime = 0;
-let menu, game, songs;
+let frame, menu, game, songs, inputstats;
 
-function menuloop(t){
-
-	let dt = t - lastTime;
-	lastTime = t;
-
-	ct.clearRect(0,0,WIDTH,HEIGHT);
-	ct.fillStyle = "#ff40b4"
-	ct.fillRect(0,0,WIDTH,HEIGHT);		
-
-	if(dt){
-		menu.update(dt);
-		menu.draw(ct);
-		if(menu.finished)
-			return;
-	}
-
-	requestAnimationFrame(menuloop);
-}
 
 function loop(t){
+	gameAnimation = undefined;
 
 	let dt = t - lastTime;
 	lastTime = t;
@@ -458,14 +486,13 @@ function loop(t){
 	ct.fillRect(0,0,WIDTH,HEIGHT);	
 
 	if(dt){
-		game.update(dt);
-		game.draw(ct);
-		if(game.finished)
-			return;
+		frame.update(dt);
+		frame.draw(ct);
 	}
 
 	requestAnimationFrame(loop);
 }
+
 
 /*game = new Game(WIDTH, HEIGHT);
 songs = new Songs();
@@ -473,7 +500,11 @@ songs = new Songs();
 game.start(songs.song1);
 requestAnimationFrame(loop);*/
 
+frame = new Frame();
+frame.state = GAMESTATE.MENU;
 menu = new Menu(WIDTH, HEIGHT);
+game = new Game(WIDTH, HEIGHT);
+inputstats = new InputStats();
 menu.start();
-requestAnimationFrame(menuloop);
+requestAnimationFrame(loop);
 
