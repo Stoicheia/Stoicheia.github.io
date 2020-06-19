@@ -148,15 +148,23 @@ class Menu{
 		this.input = new MenuInput(this);
 		document.addEventListener("keydown", this.input.keyDown);
 
-		let song1Button = new SongButton(new Vector(350,350), new Vector(200,50)
-			,"Song One",this.startGame,this.songs.song1);
+		let song1Button = new SongButton(new Vector(150,350), new Vector(480,50)
+			,"Teminite & Panda Eyes - Highscore",this.startGame,this.songs.song1);
 		this.menuObjects.push(song1Button); this.selectables[0] = song1Button;
 
 		this.selectedButton = 0;
 
-		let song2Button = new SongButton(new Vector(350,420), new Vector(200,50)
-			,"Song Two",this.startGame,this.songs.song2);
+		let song2Button = new SongButton(new Vector(150,420), new Vector(140,50)
+			,"Custom",this.startGame,this.songs.song2);
 		this.menuObjects.push(song2Button); this.selectables[1] = song2Button;
+
+		let titleText = new MenuText(new Vector(95,200), 100
+			,"Bullet Purgatory","#fde");
+		this.menuObjects.push(titleText);
+
+		let selectSongText = new MenuText(new Vector(150,325), 30
+			,"Select Song","#a00");
+		this.menuObjects.push(selectSongText);
 	}
 	update(dt){
 
@@ -176,6 +184,20 @@ class Menu{
 	}
 }
 
+class MenuText{
+	constructor(pv,s,text,style){
+		this.size = s;
+		this.position = pv;
+		this.text = text;
+		this.style = style
+	}
+	draw(c){
+		c.fillStyle = this.style;
+		c.font = this.size+"px Yokel";
+		c.fillText(this.text, this.position.x, this.position.y);
+	}	
+}
+
 class Button{
 	constructor(pv,sv,text,click){
 		this.size = sv;
@@ -191,7 +213,7 @@ class Button{
 		c.fillRect(this.position.x, this.position.y, this.size.x, this.size.y);
 		c.fillStyle = "#fff";
 		c.font = this.size.y/1.5+"px Yokel";
-		c.fillText(this.text, this.position.x+this.size.x/15, this.position.y+this.size.y/1.5);
+		c.fillText(this.text, this.position.x+15, this.position.y+this.size.y/1.5);
 	}
 }
 
@@ -217,7 +239,7 @@ class Game{
 
 		this.score = 0;
 
-		this.playerSpeed = 100;
+		this.playerSpeed = song.playerSpeed;
 		this.player = new Player(this, this.playerSpeed);
 		this.input = new InputHandler(this.player);
 		document.addEventListener("keydown", this.input.keyDown);
@@ -276,11 +298,11 @@ class Player{
 		this.vel=new Vector(0,0);
 		this.position=new Vector(this.screenWidth/2-this.size.x/2, this.screenHeight/2-this.size.y/2);
 
-		this.sprintFactor=1.7;
+		this.sprintFactor=1.67;
 		this.status="normal";
 		this.scoreMod=1;
-		this.scorePenalty=1.4;
-		this.scoreShield=1.4;
+		this.scorePenalty=2.5;
+		this.scoreShield=1.8;
 	}
 	draw(c){
 		c.fillStyle = "#fee"
@@ -330,7 +352,9 @@ class Bullet{
 		this.position = pv;
 		this.size = sv;
 
-		this.leniency = 0.5;
+		this.baseDamage = 40;
+
+		this.leniency = 0.8;
 		this.collisionSize = Vector.multiply(this.leniency, this.size);
 		this.collisionPos = Vector.add(this.position,
 			new Vector(this.size.x*(1-this.leniency)/2, this.size.y*(1-this.leniency)/2));
@@ -345,7 +369,7 @@ class Bullet{
 		//ct.fillStyle = "#000";
 		//ct.fillRect(this.collisionPos.x, this.collisionPos.y, this.collisionSize.x, this.collisionSize.y);
 		if(Vector.intersect(this.collisionPos,this.collisionSize,game.player.position,game.player.size)){
-			this.game.score-=this.game.player.scoreMod*this.vel.magnitude()/dt;
+			this.game.score-=this.game.player.scoreMod*(this.vel.magnitude()+this.baseDamage)*this.game.audioDt;
 			this.image = document.querySelector("#bullet_contact");
 		}
 		else{
@@ -371,6 +395,8 @@ class Shooter{
 		this.active = true;
 		this.dir = d;
 
+		this.topScreenPenalty = 200;
+
 		this.timer = 0;
 		let songInfo = this.sequence[0].split(",");
 		this.tempo = parseFloat(songInfo[0]);
@@ -394,6 +420,9 @@ class Shooter{
 	update(dt){
 		this.move(this.vel);
 
+		if(Vector.intersect(this.position,this.size,game.player.position,game.player.size))
+			this.game.score-=this.topScreenPenalty*this.game.audioDt;
+
 		if(this.game.audioDt!=0)
 			this.timer += this.game.audioDt; //Change to follow audio dt later
 
@@ -414,8 +443,10 @@ class Shooter{
 				if(this.currentAction!=this.sequenceLength-1){
 					this.nextPos = parseFloat(this.sequence[this.currentAction+1].split(",")[0]);			
 				}
-				this.interval = eval(this.currentInfo[1]);
-				this.bulletSpeed = parseFloat(this.currentInfo[2]);
+				if(this.currentInfo.length>1)
+					this.interval = eval(this.currentInfo[1]);
+				if(this.currentInfo.length>2)
+					this.bulletSpeed = parseFloat(this.currentInfo[2]);
 				if(this.currentInfo.length>3)
 					this.bulletState = parseFloat(this.currentInfo[3]);
 				if(this.currentInfo.length>4)
@@ -435,7 +466,7 @@ class Shooter{
 
 	shootAction(){
 		let hitSound = new Audio("game_assets/hit.mp3");
-		hitSound.play();
+		
 		let bulletPos = new Vector(0,0);
 		switch(this.dir){
 				case 0:
@@ -461,6 +492,7 @@ class Shooter{
 		bulletPos = Vector.copy(this.position);
 		let b;
 		if(this.bulletState!=0){
+			hitSound.play();
 			b = new Bullet(this.game, new Vector(70,70),bulletPos,this.bulletVel);
 			this.game.gameObjects.push(b);
 		}	
