@@ -115,17 +115,17 @@ body {
 }
 .animeleft{
 	position: absolute;
-	top: 500px;
-	left: 6%;
-	width: 26%;
+	top: 600px;
+	right: 85%;
+	width: 450px;
 	height: auto;
 	z-index: -1;
 }
 .animeright{
 	position: absolute;
-	top: 600px;
-	right: 0%;
-	width: 42%;
+	top: 700px;
+	left: 65%;
+	width: 700px;
 	height: auto;
 	z-index: -1;
 }
