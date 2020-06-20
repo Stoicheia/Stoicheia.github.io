@@ -253,6 +253,7 @@ class Game{
 
 		this.score = 0;
 		this.combo = 0;
+		this.comboHundred = false;
 		this.highCombo = 0;
 
 		this.playerSpeed = song.playerSpeed;
@@ -284,6 +285,14 @@ class Game{
 		document.querySelector("#score").textContent=Math.round(this.score);
 		document.querySelector("#highCombo").textContent="Best Combo: " + Math.round(this.highCombo);
 		document.querySelector("#loadProgress").style.width = (100*(this.song.audio.currentTime/this.song.audio.duration))+"%";
+
+		if(this.combo%100!=0 || this.combo==0)
+			this.comboHundred = false;
+		if(this.combo%100==0 && this.combo>0 && !this.comboHundred){
+			let comboSound = new Audio("game_assets/applause.mp3");
+			comboSound.play();
+			this.comboHundred = true;
+		}
 	}
 	draw(ct){
 		ct.fillStyle = "#fdf";								//draw combo
@@ -506,6 +515,7 @@ class Shooter{
 
 	shootAction(){
 		let hitSound = new Audio("game_assets/hit.mp3");
+		hitSound.volume = 0.5;
 		
 		let bulletPos = new Vector(0,0);
 		switch(this.dir){
