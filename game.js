@@ -141,7 +141,7 @@ class Menu{
 		this.height = h;
 	}
 	start(){
-		this.songs = new Songs();
+		this.songs = songs;
 		this.menuObjects = [];
 		this.selectables = [];
 
@@ -194,6 +194,7 @@ class MenuText{
 	draw(c){
 		c.fillStyle = this.style;
 		c.font = this.size+"px Yokel";
+		c.textAlign = "left";
 		c.fillText(this.text, this.position.x, this.position.y);
 	}	
 }
@@ -222,6 +223,19 @@ class SongButton extends Button{
 		super(pv,sv,text,click);
 		this.song = song;
 	}
+	draw(c){
+		super.draw(c);
+		this.displayStats(c);
+	}
+	displayStats(c){
+		c.fillStyle = "#ddd";
+		c.font = this.size.y/3.2+"px Fairy";
+		c.textAlign = "left";
+		let highScoreText;
+		highScoreText = this.song.highScore===null ? "None" : this.song.highScore; 
+		c.fillText("Score: " + highScoreText, this.position.x+this.size.x+10, this.position.y+this.size.y/3);
+		c.fillText("Combo: " + this.song.highCombo, this.position.x+this.size.x+10, this.position.y+this.size.y/1.2);
+	}
 }
 
 class Game{
@@ -238,6 +252,8 @@ class Game{
 		this.audioDt = 0.001; //avoid division by zero
 
 		this.score = 0;
+		this.combo = 0;
+		this.highCombo = 0;
 
 		this.playerSpeed = song.playerSpeed;
 		this.player = new Player(this, this.playerSpeed);
@@ -266,8 +282,15 @@ class Game{
 
 		this.gameObjects.forEach((o)=>o.update(dt));
 		document.querySelector("#score").textContent=Math.round(this.score);
+		document.querySelector("#highCombo").textContent="Best Combo: " + Math.round(this.highCombo);
+		document.querySelector("#loadProgress").style.width = (100*(this.song.audio.currentTime/this.song.audio.duration))+"%";
 	}
 	draw(ct){
+		ct.fillStyle = "#fdf";								//draw combo
+		ct.font = "150px Yokel";
+		ct.textAlign = "center";
+		ct.fillText(this.combo, 385, 200);
+
 		this.gameObjects.forEach((o)=>o.draw(ct));
 	}
 	loadShooters(map){
@@ -276,8 +299,20 @@ class Game{
 		//this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(0,this.height-30), this.songs.song1,2));
 		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(this.width-35,this.height-70), map.sub2,3));
 	}
+	quit(){
+		document.removeEventListener("keydown", this.input.keyDown);
+		document.removeEventListener("keyup", this.input.keyUp);
+		inputstats.reset();
+		frame.state = GAMESTATE.MENU;
+		this.song.audio.pause();
+		menu.start();
+	}
 	end(){
-		document.querySelector("#lastScore").textContent=Math.round(this.score);		
+		if(this.song.highScore===null)
+			this.song.highScore = this.score;
+		else
+			this.song.highScore = Math.max(this.score, this.song.highScore);
+		this.song.highCombo = Math.max(this.highCombo, this.song.highCombo);
 		document.removeEventListener("keydown", this.input.keyDown);
 		document.removeEventListener("keyup", this.input.keyUp);
 		inputstats.reset();
@@ -369,8 +404,7 @@ class Bullet{
 		//ct.fillStyle = "#000";
 		//ct.fillRect(this.collisionPos.x, this.collisionPos.y, this.collisionSize.x, this.collisionSize.y);
 		if(Vector.intersect(this.collisionPos,this.collisionSize,game.player.position,game.player.size)){
-			this.game.score-=this.game.player.scoreMod*(this.vel.magnitude()+this.baseDamage)*this.game.audioDt;
-			this.image = document.querySelector("#bullet_contact");
+			this.onHit();
 		}
 		else{
 			this.image = document.querySelector("#bullet");
@@ -380,6 +414,12 @@ class Bullet{
 		this.position = Vector.add(this.position, Vector.multiply(1/dt,v));
 		this.collisionPos = Vector.add(this.position,
 			new Vector(this.size.x*(1-this.leniency)/2, this.size.y*(1-this.leniency)/2));	
+	}
+	onHit(){
+		this.game.highCombo = Math.max(this.game.combo, this.game.highCombo);
+		this.game.combo = 0;
+		this.game.score-=this.game.player.scoreMod*(this.vel.magnitude()+this.baseDamage)*this.game.audioDt;
+		this.image = document.querySelector("#bullet_contact");
 	}
 }
 
@@ -493,6 +533,8 @@ class Shooter{
 		let b;
 		if(this.bulletState!=0){
 			hitSound.play();
+			this.game.combo += 1;
+			this.game.highCombo = Math.max(this.game.combo, this.game.highCombo);
 			b = new Bullet(this.game, new Vector(70,70),bulletPos,this.bulletVel);
 			this.game.gameObjects.push(b);
 		}	
@@ -565,6 +607,7 @@ frame = new Frame();
 frame.state = GAMESTATE.MENU;
 menu = new Menu(WIDTH, HEIGHT);
 game = new Game(WIDTH, HEIGHT);
+songs = new Songs();
 inputstats = new InputStats();
 menu.start();
 requestAnimationFrame(loop);

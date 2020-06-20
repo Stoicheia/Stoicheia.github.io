@@ -2,6 +2,10 @@
     font-family: 'Yokel'; 
     src: url('fonts/Yokel.ttf'); 
 }
+@font-face {
+    font-family: 'Fairy'; 
+    src: url('fonts/Fairy.ttf'); 
+}
 
 #gameScreen{
 	position: absolute;
@@ -26,26 +30,49 @@ img{
 	width: 200px;
 	text-align: right;
 	padding-right: 10px;
-	left: 65%;
-	top: 5%;
+	right: 500px;
+	top: 45px;
 	background-color: #ff9ed3;
 	border-style: solid;
 	border-color: #000;
 	border-width: 3px;
 }
 
-#lastScore{
+#loadBar{
 	position: absolute;
+	align-content: left;
 	font-family: Yokel;
 	font-size: 50px;
-	line-height: 50px;
+	height: 50px;
 	width: 200px;
 	text-align: left;
-	padding-left: 10px;
-	left: 19.5%;
-	top: 5%;
-	background-color: #ff9ed3;
+	left: 500px;
+	top: 45px;
+	background-color: #cdd;
 	border-style: solid;
 	border-color: #000;
 	border-width: 3px;
+}
+
+#loadProgress{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: #2d2;
+}
+
+#highCombo{
+	position: absolute;
+	font-family: Yokel;
+	font-size: 20px;
+	line-height: 20px;
+	width: 150px;
+	text-align: right;
+	padding-right: 10px;
+	right: 500px;
+	top: 100px;
+	background-color: #ff9ed3;
+	border-style: solid;
+	border-color: #000;
+	border-width: 2px;
 }
