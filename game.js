@@ -232,7 +232,7 @@ class SongButton extends Button{
 		c.font = this.size.y/3.2+"px Fairy";
 		c.textAlign = "left";
 		let highScoreText;
-		highScoreText = this.song.highScore===null ? "None" : this.song.highScore; 
+		highScoreText = this.song.highScore===null ? "None" : Math.round(this.song.highScore); 
 		c.fillText("Score: " + highScoreText, this.position.x+this.size.x+10, this.position.y+this.size.y/3);
 		c.fillText("Combo: " + this.song.highCombo, this.position.x+this.size.x+10, this.position.y+this.size.y/1.2);
 	}
