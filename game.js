@@ -271,10 +271,10 @@ class Game{
 		this.gameObjects.forEach((o)=>o.draw(ct));
 	}
 	loadShooters(map){
-		//this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(-35,0), map.sub1, 0));
+		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(-35,0), map.sub1, 0));
 		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(this.width-70,-35), map.main, 1));
 		//this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(0,this.height-30), this.songs.song1,2));
-		//this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(this.width-35,this.height-70), map.sub2,3));
+		this.shooters.push(new Shooter(this, new Vector(70,70), new Vector(this.width-35,this.height-70), map.sub2,3));
 	}
 	end(){
 		document.querySelector("#lastScore").textContent=Math.round(this.score);		
