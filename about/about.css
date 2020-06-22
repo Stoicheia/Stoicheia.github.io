@@ -1,0 +1,170 @@
+.infowrapmini{
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: center;
+	height: 75px;
+	left: 50%;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 20px;
+	margin-bottom: 100px;
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
+.leftymini{
+	position: absolute;
+	left: 0%;
+	height: 100%;
+	width: 30%;
+	border-radius: 3px;
+}
+
+.infoblockmini:hover{
+	-webkit-animation: glowmg 0.15s ease-in-out forwards;
+	-moz-animation: glowmg 0.15s ease-in-out forwards;
+	animation: glowmg 0.15s ease-in-out forwards;
+}
+
+@-webkit-keyframes glowmg{100%{-webkit-box-shadow: 0 0 3px 2px #fff;}}
+@-moz-keyframes glowmg{100%{-moz-box-shadow: 0 0 3px 2px #fff;}}
+@keyframes glowmg{100%{box-shadow: 0 0 3px 2px #fff;}}
+
+.infowrapmini a{
+	margin: 0px 5px;
+}
+
+.infoblockmini{
+	position: relative;
+	height: 100%;
+	width: 270px;
+	margin: 0px 0px;
+	background-color: rgba(249,104,179,0.8);
+	border-style: solid;
+	border-width: 1px;
+	border-color: #fcc;
+	border-radius: 5px;
+}
+.contextLmini{
+	position: absolute;
+	text-align: center;
+	color: #ffffff;
+	font-family: "Yokel";
+	font-size: 35px;
+	margin: 0;
+	line-height: 100%;
+	width: 70%;
+	left: 30%;
+	right: 25%;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+
+.statbar{
+	position: relative;
+	border-radius: 5px;
+	background-color: #fff;
+	border: solid 2px rgb(255,145,246);
+	height: 30px;
+	width: 600px;
+	margin-left: 200px;
+}
+.statbox{
+	position: absolute;
+	line-height: 30px;
+	text-indent: 16px;
+	width: 100%;
+	border-radius: 5px;
+	background-image: linear-gradient(to right, #087f18, #17c62f);
+	text-align: left;
+	white-space: nowrap;
+	font-family: "Yokel";
+	font-size: 19px;
+	color: #fcabf1;
+	margin: 0 0 0 0;
+	-webkit-animation: load 300s forwards;
+	-moz-animation: load 300s forwards;
+	animation: load 300s forwards;
+}
+.statbar:hover{
+	-webkit-box-shadow: 0 0 2px 2px #fff;
+	-moz-box-shadow: 0 0 2px 2px #fff;
+	box-shadow: 0 0 2px 2px #fff;
+}
+.statext{
+	visibility: hidden;
+	position: absolute;
+	font-family: "Fairy";
+	font-size: 18px;
+	color: white;
+	line-height: 25px;
+	top: 120%;
+	width: 100%;
+	margin: 0;
+	text-align: center;
+}
+.statbar:hover .statext{
+	visibility: visible;
+}
+@-webkit-keyframes load{0%{width: 0;}1%{width: 45%;}5%{width: 82%;}6%{width: 83%;}9%{width: 92%;}100%{width: 98%;}}
+@-moz-keyframes load{0%{width: 0;}1%{width: 45%;}5%{width: 82%;}6%{width: 83%;}9%{width: 92%;}100%{width: 98%;}}
+@keyframes load{0%{width: 0;}1%{width: 45%;}5%{width: 82%;}6%{width: 83%;}9%{width: 92%;}100%{width: 98%;}}
+
+.banner{
+	position: absolute;
+	line-height: 40px;
+	width: 998px;
+	left: -49px;
+	background-color: #e874e0;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #fff;
+	border-left: none;
+	border-right: none;
+	z-index: 0;
+
+	color: #ffffff;
+	font-family: "Yokel";
+	font-size: 28px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	text-align: center;
+	text-decoration: none;
+}
+
+.backbutton{
+	line-height: 35px;
+	width: 150px;
+	background-color: rgba(249,104,179,0.8);
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 3px;
+	border-color: #fdd;
+	margin-top:40px;
+	margin-bottom: 40px;
+}
+
+.backtext{
+	color: #ffffff;
+	font-family: "Yokel";
+	font-size: 28px;
+	margin: auto;
+	margin-bottom: 0;
+	text-align: center;
+}
+
+.backbuttonlink{
+	text-decoration: none;
+}
+
+.backbutton:hover{
+	-webkit-animation: glowmg 0.15s ease-in-out forwards;
+	-moz-animation: glowmg 0.15s ease-in-out forwards;
+	animation: glowmg 0.15s ease-in-out forwards;
+}

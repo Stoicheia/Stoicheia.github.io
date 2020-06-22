@@ -61,14 +61,20 @@ class MenuInput{
 			switch(e.keyCode){
 				case 32:
 					menu.selectables[menu.selectedButton].clickAction();
+					let selectionAudio = new Audio("game_assets/menuSelect.mp3");
+					selectionAudio.play();
 					break;
 				case 87:
 					menu.selectedButton = 
 						Maths.mod((menu.selectedButton-1),menu.selectables.length);
+					let downAudio = new Audio("game_assets/menuScroll.mp3");
+					downAudio.play();						
 					break;
 				case 83:
 					menu.selectedButton = 
 						Maths.mod((menu.selectedButton+1),menu.selectables.length);
+					let upAudio = new Audio("game_assets/menuScroll.mp3");
+					upAudio.play();								
 			}
 		};
 	}
@@ -154,9 +160,13 @@ class Menu{
 
 		this.selectedButton = 0;
 
-		let song2Button = new SongButton(new Vector(150,420), new Vector(140,50)
-			,"Custom",this.startGame,this.songs.song2);
+		let song2Button = new SongButton(new Vector(150,410), new Vector(380,50)
+			,"O2i3 - TSLove (incomplete)",this.startGame,this.songs.song2);
 		this.menuObjects.push(song2Button); this.selectables[1] = song2Button;
+
+		let song3Button = new SongButton(new Vector(150,470), new Vector(140,50)
+			,"Custom",this.startGame,this.songs.song3);
+		this.menuObjects.push(song3Button); this.selectables[2] = song3Button;
 
 		let titleText = new MenuText(new Vector(95,200), 100
 			,"Bullet Purgatory","#fde");
@@ -268,6 +278,7 @@ class Game{
 		this.loadShooters(song);
 		this.shooters.forEach((s)=>this.gameObjects.push(s));
 
+		song.audio.currentTime = 0;
 		song.audio.volume = song.audioVolume;
 		song.audio.play();
 	}
@@ -389,9 +400,11 @@ class Player{
 }
 
 class Bullet{
-	constructor(game, sv, pv, vv){
+	constructor(game, sv, pv, vv, img){
 		this.game = game;
-		this.image = document.querySelector("#bullet");
+		this.originalImage = img;
+		this.image = img;
+		//this.image = document.querySelector("#bullet");
 		this.vel = vv;
 		this.position = pv;
 		this.size = sv;
@@ -410,13 +423,13 @@ class Bullet{
 
 	update(dt){
 		this.move(this.vel, dt);
-		//ct.fillStyle = "#000";
+		//ct.fillStyle = "#000";		--- show collision box
 		//ct.fillRect(this.collisionPos.x, this.collisionPos.y, this.collisionSize.x, this.collisionSize.y);
 		if(Vector.intersect(this.collisionPos,this.collisionSize,game.player.position,game.player.size)){
 			this.onHit();
 		}
 		else{
-			this.image = document.querySelector("#bullet");
+			this.image = this.originalImage;
 		}
 	}
 	move(v, dt){
@@ -545,7 +558,21 @@ class Shooter{
 			hitSound.play();
 			this.game.combo += 1;
 			this.game.highCombo = Math.max(this.game.combo, this.game.highCombo);
-			b = new Bullet(this.game, new Vector(70,70),bulletPos,this.bulletVel);
+			let bulletImage;	
+			switch(this.bulletState){
+				case 1:
+					bulletImage = document.querySelector("#bullet");
+					break;
+				case 2:
+					bulletImage = document.querySelector("#bullet2");
+					break;
+				case 3:
+					bulletImage = document.querySelector("#bullet3");
+					break;
+				default:
+					bulletImage = document.querySelector("#bullet4");
+			}
+			b = new Bullet(this.game, new Vector(70,70),bulletPos,this.bulletVel,bulletImage);
 			this.game.gameObjects.push(b);
 		}	
 	}	

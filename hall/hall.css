@@ -1,0 +1,153 @@
+.infowrapmini{
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: left;
+	width: 600px;
+	margin: 0;
+}
+
+.leftymini{
+	position: absolute;
+	left: 0%;
+	height: 100%;
+	width: 10%;
+	border-radius: 3px;
+}
+
+h1{
+	font-size: 70px;
+}
+
+.round{
+	border-radius: 50px;
+}
+
+
+.info{
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	width: 750px;
+	margin: auto;
+	margin-top: 40px;
+	margin-bottom: 60px;
+	background-color: #dcaa9f;
+	border-radius: 8px;
+}
+
+.infopics{
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: left;
+
+	margin: 0;
+}
+
+.infoTL{
+	border-radius: 8px 0 0 0;
+}
+
+.infoTR{
+	border-radius: 0 8px 0 0;
+}
+
+.infoBL{
+	border-radius: 0 0 0 8px;
+}
+
+.infoBR{
+	border-radius: 0 0 8px 0;
+}
+
+.infoR{
+	border-radius: 0 8px 8px 0;
+}
+
+.infopic{
+	position: absolute;
+	width: 150px;
+	overflow: hidden;
+	margin-left: 3px;
+}
+
+
+.infoblockmini:hover{
+	-webkit-animation: glowmg 0.15s ease-in-out forwards;
+	-moz-animation: glowmg 0.15s ease-in-out forwards;
+	animation: glowmg 0.15s ease-in-out forwards;
+}
+
+@-webkit-keyframes glowmg{100%{-webkit-box-shadow: 0 0 3px 2px #fff;}}
+@-moz-keyframes glowmg{100%{-moz-box-shadow: 0 0 3px 2px #fff;}}
+@keyframes glowmg{100%{box-shadow: 0 0 3px 2px #fff;}}
+
+.infowrapmini a{
+	margin: 0px 0px;
+}
+
+.infoblockmini{
+	position: relative;
+	height: 50px;
+	width: 100%;
+	margin: 0 0 1px 0;
+	background-color: #ed499e;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #fcc;
+}
+.contextLmini{
+	position: absolute;
+	text-align: left;
+	color: #ffffff;
+	font-family: "Yokel";
+	font-size: 35px;
+	margin: 0;
+	line-height: 100%;
+	width: 70%;
+	left: 15%;
+	right: 25%;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+.backbutton{
+	line-height: 35px;
+	width: 220px;
+	background-color: rgba(249,104,179,0.8);
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 3px;
+	border-color: #fdd;
+	margin-top: 0px;
+	margin-bottom: 40px;
+}
+
+.backtext{
+	color: #ffffff;
+	font-family: "Yokel";
+	font-size: 28px;
+	margin: auto;
+	margin-bottom: 0;
+	text-align: center;
+}
+
+.backbuttonlink{
+	text-decoration: none;
+}
+
+.backbutton:hover{
+	-webkit-animation: glowmg 0.15s ease-in-out forwards;
+	-moz-animation: glowmg 0.15s ease-in-out forwards;
+	animation: glowmg 0.15s ease-in-out forwards;
+}
+
+.rightimage{
+	float: right;
+	margin-left: 20px;
+	height: 200px;
+}
