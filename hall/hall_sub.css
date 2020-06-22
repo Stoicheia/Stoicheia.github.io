@@ -5,3 +5,67 @@ h1{
 .round{
 	border-radius: 2px;
 }
+
+h2{
+	text-align: left;
+}
+
+.thumbnail{
+	border: 1px solid #ff7cc0;
+	height: 120px;
+	width: 120px;
+}
+
+.thumbnail:hover{
+	-webkit-animation: glowmg 0.15s ease-in-out forwards;
+	-moz-animation: glowmg 0.15s ease-in-out forwards;
+	animation: glowmg 0.15s ease-in-out forwards;
+}
+
+@-webkit-keyframes glowmg{100%{-webkit-box-shadow: 0 0 3px 2px #fff;}}
+@-moz-keyframes glowmg{100%{-moz-box-shadow: 0 0 3px 2px #fff;}}
+@keyframes glowmg{100%{box-shadow: 0 0 3px 2px #fff;}}
+
+.gallery{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 610px;
+	margin: auto;
+	margin-bottom: 50px;
+}
+
+.modal{
+	display: none;
+	position: fixed;
+	z-index: 100;
+	left: -5%;
+	top: 0%;
+	width: 105%;
+	height: 100%;
+	overflow: auto;
+	background-color: #00000099;
+}
+
+.popup{
+	left: 50%;
+	top: 15%;
+	background-color: #fefefe;
+	position: fixed;	
+	margin: auto;
+	border: 1px solid #fff;
+	height: 400px;
+	width: auto;
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
+.popupimage{
+	height: 400px;
+	width: auto;
+}
+
+.popuptext{
+	text-align: center;
+}

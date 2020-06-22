@@ -137,19 +137,23 @@ body {
 	width: auto;
 	z-index: -1;
 }
+.right{
+	text-align: right;
+}
+
 .fleft{
     width:auto;
     max-width: 42%;
     height:auto;
     float:left;
-    margin: 0 20 0 0;
+    margin: 0 30 0 0;
 }
 .fright{
     width:auto;
     max-width: 42%;
     height:auto;
     float:right;
-    margin: 0 0 0 20;
+    margin: 0 0 0 30;
 }
 table {
 	position: relative;
