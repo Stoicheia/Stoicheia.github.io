@@ -133,7 +133,7 @@ body {
 	position: fixed;
 	top: 0%;
 	right: 0%;
-	height: 24%;
+	height: 230px;
 	width: auto;
 	z-index: -1;
 }
@@ -161,6 +161,7 @@ table {
 	border-radius: 6px;
 	background-color: #f01186;
 	width: 1000;
+	margin: auto;
 }
 div {
 	margin: 0px 50px;
@@ -254,7 +255,7 @@ div img {
 
 .themetext{
 	position: absolute;
-	/*visibility: hidden;*/
+	visibility: hidden;
 	font-family: Yokel;
 	font-size: 32px;
 	color: white;
