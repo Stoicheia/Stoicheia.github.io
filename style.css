@@ -18,9 +18,7 @@
     font-family: 'Comic'; 
     src: url('fonts/Baloo.ttf'); 
 }
-.container{
-	position: relative;
-}
+
 .text {
 	color: #ffffff;
 	font-family: Comic, "Comic Sans MS", "Comic Sans", cursive;
