@@ -140,6 +140,13 @@ body {
 	text-align: right;
 }
 
+.textcontent{
+	display: inline-block;
+	text-align: justify;
+	line-height: 1.5;
+	margin: 0;
+	margin-bottom: 40px;
+}
 .fleft{
     width:auto;
     max-width: 42%;
@@ -177,7 +184,7 @@ div img {
 	line-height: 50px;
 }
 #nav ul {
-	width: 1000;
+	width: 1000px;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -188,6 +195,7 @@ div img {
 	float: left;
 	margin: 10px 0px;
 }
+
 #nav a:link, a:visited {
 	display: block;
 	font-weight: bold;

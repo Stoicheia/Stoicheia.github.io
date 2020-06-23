@@ -1,0 +1,42 @@
+.topnav:hover{
+	-webkit-animation: glowsg 0.15s ease-in-out forwards;
+	-moz-animation: glowsg 0.15s ease-in-out forwards;
+	animation: glowsg 0.15s ease-in-out forwards;
+}
+
+.projlink:hover{
+	-webkit-animation: glowmg 0.15s ease-in-out forwards;
+	-moz-animation: glowmg 0.15s ease-in-out forwards;
+	animation: glowmg 0.15s ease-in-out forwards;
+}
+
+h1{
+	font-size: 70px;
+	margin-bottom: 30px;
+}
+
+.infonav{
+	position: absolute;
+	transform: translate(20px,-50px);
+	-moz-transform: translate(20px,-50px);
+	-webkit-transform: translate(20px,-50px);
+}
+
+.banner{
+	margin: 30px -4px 50px -4px;
+	background-color: rgba(249,104,179,0.8);
+	color: #fff;
+	line-height: 50px;
+	text-align: center;
+	border: 1px solid #fff;
+	font-family: "Yokel";
+	font-size: 35px;
+}
+
+@-webkit-keyframes glowmg{100%{-webkit-box-shadow: 0 0 10px 3px #fff;}}
+@-moz-keyframes glowmg{100%{-moz-box-shadow: 0 0 10px 3px #fff;}}
+@keyframes glowmg{100%{box-shadow: 0 0 10px 3px #fff;}}
+
+@-webkit-keyframes glowsg{100%{-webkit-box-shadow: 0 0 10px 3px #dfc;}}
+@-moz-keyframes glowsg{100%{-moz-box-shadow: 0 0 10px 3px #dfc;}}
+@keyframes glowsg{100%{box-shadow: 0 0 10px 3px #dfc;}}
