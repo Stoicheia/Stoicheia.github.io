@@ -179,12 +179,16 @@ div img {
 .list {
 	margin: 0px;
 }
+.navitems{
+	width: 900px;
+	margin: auto;
+}
 #nav div {
 	text-align: center;
 	line-height: 50px;
+	margin: auto;
 }
 #nav ul {
-	width: 1000px;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
