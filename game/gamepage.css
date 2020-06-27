@@ -30,8 +30,8 @@ img{
 	width: 200px;
 	text-align: right;
 	padding-right: 10px;
-	right: 500px;
-	top: 45px;
+	right: 20%;
+	top: 5%;
 	background-color: #ff9ed3;
 	border-style: solid;
 	border-color: #000;
@@ -46,8 +46,8 @@ img{
 	height: 50px;
 	width: 200px;
 	text-align: left;
-	left: 500px;
-	top: 45px;
+	left: 20%;
+	top: 5%;
 	background-color: #cdd;
 	border-style: solid;
 	border-color: #000;
@@ -69,8 +69,8 @@ img{
 	width: 150px;
 	text-align: right;
 	padding-right: 10px;
-	right: 500px;
-	top: 100px;
+	right: 20%;
+	top: 10.5%;
 	background-color: #ff9ed3;
 	border-style: solid;
 	border-color: #000;

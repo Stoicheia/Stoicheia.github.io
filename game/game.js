@@ -59,7 +59,7 @@ class MenuInput{
 	constructor(menu){
 		this.keyDown = function(e){
 			switch(e.keyCode){
-				case 32:
+				case 13: case 67:
 					menu.selectables[menu.selectedButton].clickAction();
 					let selectionAudio = new Audio("game_assets/menuSelect.mp3");
 					selectionAudio.play();
@@ -366,7 +366,7 @@ class Player{
 	update(dt){
 		this.vel = Vector.multiply(this.speed,Vector.normalised(inputstats.inputVector));
 		if(inputstats.characterHeld[16]) this.sprint();
-		if(inputstats.characterHeld[32]) this.focus();
+		if(inputstats.characterHeld[67]) this.focus();
 		else if(!inputstats.characterHeld[16]) this.status = "normal";
 
 		switch(this.status){
