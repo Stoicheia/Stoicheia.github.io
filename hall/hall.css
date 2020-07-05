@@ -8,6 +8,7 @@
 }
 .questionwrapmini{
 	width: 400px;
+	border-radius: 8px 0px 0px 8px;
 }
 
 .leftymini{
@@ -45,7 +46,7 @@ h2{
 	margin: auto;
 	margin-top: 0px;
 	margin-bottom: 80px;
-	background-color: #dcaa9f;
+
 	border-radius: 8px;
 }
 .questioninfo{
@@ -61,28 +62,10 @@ h2{
 	margin: 0;
 }
 
-.infoTL{
-	border-radius: 8px 0 0 0;
-}
 
-.infoTR{
-	border-radius: 0 8px 0 0;
-}
-
-.infoBL{
-	border-radius: 0 0 0 8px;
-}
-
-.infoBR{
-	border-radius: 0 0 8px 0;
-}
-
-.infoR{
-	border-radius: 0 8px 8px 0;
-}
 
 .infopic{
-	position: absolute;
+	position: relative;
 	width: 180px;
 	overflow: hidden;
 	margin-left: 3px;
@@ -114,10 +97,11 @@ h2{
 	position: relative;
 	height: 60px;
 	width: 100%;
-	margin: 0 0 1px 0;
+	margin: 0;
 	background-color: #ed499e;
 	border-style: solid;
 	border-width: 1px;
+	border-radius: 8px 0px 0px 8px;
 	border-color: #fcc;
 }
 
@@ -176,4 +160,26 @@ h2{
 	float: right;
 	margin-left: 20px;
 	height: 200px;
+}
+
+.infoTL{
+	border-top-color: #fee;
+}
+
+.infoTR{
+	border-radius: 0 8px 0 0;
+}
+
+.infoBL{
+	border-bottom-color: #fee;
+}
+
+.infoBR{
+	border-radius: 0 0 8px 0;
+}
+
+.infoR{
+	border-radius: 0 8px 8px 0;
+	border-top-color: #fee;
+	border-bottom-color: #fee;
 }
