@@ -33,6 +33,20 @@ h1{
 	font-size: 35px;
 }
 
+.textcontent{
+	margin-bottom: 80px;
+}
+
+table {
+	position: relative;
+	display: table;
+	border: 0.5px solid #cff;
+	border-radius: 6px;
+	background-color: #d50176;
+	width: 1000;
+	margin: auto;
+}
+
 @-webkit-keyframes glowmg{100%{-webkit-box-shadow: 0 0 10px 3px #fff;}}
 @-moz-keyframes glowmg{100%{-moz-box-shadow: 0 0 10px 3px #fff;}}
 @keyframes glowmg{100%{box-shadow: 0 0 10px 3px #fff;}}
