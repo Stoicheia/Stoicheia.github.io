@@ -17,9 +17,9 @@ h1{
 
 .infonav{
 	position: absolute;
-	transform: translate(20px,-50px);
-	-moz-transform: translate(20px,-50px);
-	-webkit-transform: translate(20px,-50px);
+	transform: translate(90px,-50px);
+	-moz-transform: translate(90px,-50px);
+	-webkit-transform: translate(90px,-50px);
 }
 
 .banner{
