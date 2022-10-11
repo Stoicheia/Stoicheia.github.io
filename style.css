@@ -402,4 +402,75 @@ div img {
 	transform: translateY(-50%);
 }
 
+.infowrapmini{
+	border-radius: 3px;
+	background-color: #e00186;	
+	border: 1px solid gray	;
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: center;
+	width: 950px;
+	height: 75px;
+	left: 50%;
+	padding: 20px 0px 20px 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: -10px;
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
+.leftymini{
+	position: absolute;
+	left: 0%;
+	height: 100%;
+	width: 30%;
+	border-radius: 3px;
+}
+
+.infoblockmini:hover{
+	-webkit-animation: glowmg 0.15s ease-in-out forwards;
+	-moz-animation: glowmg 0.15s ease-in-out forwards;
+	animation: glowmg 0.15s ease-in-out forwards;
+}
+
+@-webkit-keyframes glowmg{100%{-webkit-box-shadow: 0 0 3px 2px #fff;}}
+@-moz-keyframes glowmg{100%{-moz-box-shadow: 0 0 3px 2px #fff;}}
+@keyframes glowmg{100%{box-shadow: 0 0 3px 2px #fff;}}
+
+.infowrapmini a{
+	margin: 0px 5px;
+}
+
+.infoblockmini{
+	position: relative;
+	height: 100%;
+	width: 270px;
+	margin: 0px 0px;
+	background-color: rgba(249,124,199,1);
+	border-style: solid;
+	border-width: 1px;
+	border-color: #fcc;
+	border-radius: 5px;
+}
+.contextLmini{
+	position: absolute;
+	text-align: center;
+	color: #ffffff;
+	font-family: "Yokel";
+	font-size: 35px;
+	margin: 0;
+	line-height: 100%;
+	width: 70%;
+	left: 30%;
+	right: 25%;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
 

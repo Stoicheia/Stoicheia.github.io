@@ -23,13 +23,30 @@ h1{
 }
 
 .infogroup{
-	margin: 30px -4px 50px -4px;
-	background-color: rgba(0,0,0,0.2);
-	border: 2px solid #fff;
+	margin: 0px -4px 0px -4px;
+	/*background-color: rgba(0,0,0,0.2);*/
+	border-bottom: 2px solid #fff;
 }
 
+.infogroupbottom{
+	margin: 0px -4px 0px -4px;
+	/*background-color: rgba(0,0,0,0.2);*/
+}
+
+.infogroup2{
+	margin: 0px -4px 0px -4px;
+	background-color: rgba(0,0,0,0.2);
+	border-bottom: 2px solid #fff;
+}
+
+.infogroupbottom2{
+	margin: 0px -4px 0px -4px;
+	background-color: rgba(0,0,0,0.2);
+}
+
+
 .banner{
-	margin: 30px -4px 50px -4px;
+	margin: 0px -4px 0px -4px;
 	background-color: rgba(249,104,179,0.8);
 	color: #fff;
 	line-height: 50px;
