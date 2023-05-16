@@ -29,14 +29,14 @@
 	padding-right: 7px;
 }
 .text a:link{
-	color:black;
+	color:lightskyblue;
 	text-decoration: none;
-	font-size: 18px;
+	font-size: 17px;
 }
 .text a:visited{
-	color:black;
+	color:lightskyblue;
 	text-decoration: none;
-	font-size: 18px;	
+	font-size: 17px;	
 }
 .audio {
 	position: fixed;
@@ -97,13 +97,13 @@ h4 {
 	padding: 0;
 }
 li {
-	color: #14144c;
-	font-family: Vermin,sans-serif;
+	color: white;
+	font-family: Fairy,sans-serif;
 	-webkit-text-stroke: 0.25px;
 	-moz-text-stroke: 0.25px;
 	text-stroke: 0.25px;
 	text-align: justify;
-	margin: 20px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
 }
 body {
 	margin: auto;
@@ -140,6 +140,10 @@ body {
 	text-align: right;
 }
 
+.grid-container {
+	display: grid;
+}
+
 .textcontent{
 	display: inline-block;
 	text-align: justify;
@@ -147,12 +151,27 @@ body {
 	margin: 0;
 	margin-bottom: 40px;
 }
+
+.textcontentcenter{
+	display: inline-block;
+	text-align: justify;
+	line-height: 1.5;
+	margin: 0;
+	margin-bottom: 40px;
+}
+
 .fleft{
     width:auto;
     max-width: 42%;
     height:auto;
     float:left;
     margin: 0 30 0 0;
+}
+.fmid{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
 }
 .fright{
     width:auto;
