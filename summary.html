@@ -62,6 +62,35 @@
 
 	<div class="infogroup">
 		<div class="textcontent">
+
+			<div style="width: 100%; ">
+				<h2 style="text-align:left;">Nanokin: The Most Ambitious JRPG Ever*</h2>
+				<img style="height: auto; width: 400;" src="images/Portfolio/nano1.gif">
+				<img style="height: auto; width: 400;" src="images/Portfolio/nano2.gif">
+			</div>
+
+			<p style="text-align: left;" class="text">
+				<a href = "https://twitter.com/i/status/1655936363513118722">Watch our awesome trailer!</a>
+				Developed by Studio Anjin, a fully-remote studio of ~10 members.
+				A 3D JRPG-platformer with one of the most complex turn-based combat mechanics in any JRPG*.
+				My main contributions to this project are listed below.
+			<ul>
+				<li> Implemented 3D platforming speedrun mechanics; optimised character controller for
+				game feel, using realistic physics as a starting point.
+				<li> Extended existing custom (Lua-based) scripting language for designing combat skills.
+				<li> Minimax combat AI with simple but innovative approach to difficulty scaling (not depth; ask me).
+				<li> Created systematic framework to describe the motion/evolution of complex VFX in combat (using tweens,
+					splines, z-buffer hacks, etc.).
+				<li> Misc: minimap system, on-screen keyboard, chaining state-dependent skills in combat, wrote
+					some simple shaders, fixed various math/physics-related inaccuracies, fixed game-breaking memory leaks.
+			</ul>
+			<small style="color: white; font-family: Fairy; font-size: 4"><i>*of the ones I've played, which is admittedly not many :(</i></small>
+			</p>
+		</div>
+	</div>
+
+	<div class="infogroup">
+		<div class="textcontent">
 			
 			<div style="width: 100%; padding-bottom: 20">
 				<h2 style="text-align:left;">Minty Beats - Custom Beatmap Editor</h2>
@@ -70,8 +99,8 @@
 			</div>
 			
 			<p style="text-align: left;" class="text">
-				<a href = "https://github.com/Stoicheia/Music-Editor">See github project for more info.</a>
-				Minty Beats is a general-purpose custom beatmap editor for your rhythm game! Originally made for quick prototyping in game jams.
+				<a href = "https://github.com/Stoicheia/Music-Editor">See github project for more info, including a cool infographic.</a>
+				Minty Beats is a general-purpose custom beatmap editor for your rhythm game! Originally made for quick prototyping of rhythm games in game jams.
 				Beatmaps are saved as JSON files.
 				<ul>
 				<li> Supports mid-song BPM/Time signature changes!
@@ -98,10 +127,11 @@
 				<a href = "https://github.com/Stoicheia/DungeonGeneratorUnity">See github project for more info.</a>
 				A Unity tool to create procedurally generated tile-based dungeons, inspired by <i>The Binding of Isaac: Rebirth</i>. I proved that this algorithm generates a strict superset of all 
 				possible floor layouts in <i>TBoI:R</i>,
-				with some caveats. In other words, this algorithm can do everything <i>TBoI:R</i> can, plus a lot more!
+				with some caveats. In other words, this algorithm can do everything <i>TBoI:R</i> can (except thin rooms), plus a lot more!
 			<ul>
 				<li> Very fine tuned yet <b>intuitive</b> control over generation parameters!
-				<li> Such parameters include "clustering" and "branching", which are readily observable qualities.
+				<li> Such parameters include "clustering" and "branching", which are both very designer-intuitive, <i>and together
+						completely determine the nature of the algorithm's randomness (up to symmetry).</i>
 				<li> Make crazy room shapes (connected rooms only); specify different placement rules
 						for special rooms!
 				<li> Program automatically detects any contradictions in your specifications!
@@ -114,32 +144,7 @@
 		</div>
 	</div>
 
-	<div class="infogroup">
-		<div class="textcontent">
-
-			<div style="width: 100%; ">
-				<h2 style="text-align:left;">Nanokin: The Most Ambitious JRPG Ever*</h2>
-				<img style="height: auto; width: 400;" src="images/Portfolio/nano1.gif">
-				<img style="height: auto; width: 400;" src="images/Portfolio/nano2.gif">
-			</div>
-
-			<p style="text-align: left;" class="text">
-				<a href = "https://twitter.com/i/status/1655936363513118722">Watch our awesome trailer!</a>
-				A 3D JRPG-platformer with one of the most complex turn-based combat mechanics in any JRPG.
-				My main contributions to this project are listed below.
-				<ul>
-					<li> Minimax combat AI with simple but innovative approach to difficulty scaling.
-					<li> Extended existing custom (Lua-based) scripting language for designing combat skills.
-					<li> Implemented 3D paltforming speedrun mechanics.
-					<li> Created systematic way to describe the motion of complex VFX in combat (using tweens,
-							splines, z-buffer hacks, etc.).
-					<li> Misc: minimap system, on-screen keyboard, chaining state-dependent skills in combat, wrote
-						 some simple shaders, fixed various math/physics-related inaccuracies, fixed game-breaking memory leaks.
-				</ul>
-				<small style="color: white; font-family: Fairy; font-size: 4"><i>*of the ones I've played, which is admittedly not many :(</i></small>
-			</p>
-		</div>
-	</div>
+	
 
 	<div class="infogroup">
 		<div class="textcontent">
@@ -152,7 +157,7 @@
 
 			<p style="text-align: left;" class="text">
 				Set up OpenGL rendering pipeline and scene from scratch for a university course at the Australian National University (not University of Canberra, that is a meme).
-				I got the highest mark in this course out of ~50 students. I'm not that good at computer graphics/tech art in practice,
+				I got the highest mark in this course out of ~50 students. I'm still not that good at computer graphics/tech art in practice,
 				but hey, I am actively learning.
 				
 			<ul>
